@@ -1,0 +1,3381 @@
+views:
+  - title: Room overview
+    path: room-overview
+    icon: mdi:home-assistant
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - cards:
+              - type: picture-elements
+                image: local/livingroom.jpg
+                elements:
+                  - type: custom:text-element
+                    text: Living
+                    style:
+                      color: black
+                      font-size: 175%
+                      left: 5%
+                      top: 7%
+                      transform: initial
+                  - type: state-icon
+                    entity: group.lights_all
+                    style:
+                      right: 45%
+                      top: 2%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: state-icon
+                    entity: switch.smart_plug_playroom_local
+                    icon: mdi:string-lights
+                    style:
+                      right: 55%
+                      top: 2%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: state-label
+                    entity: sensor.lumi_lumi_weather_temperature
+                    style:
+                      color: black
+                      font-size: 130%
+                      right: 0%
+                      top: 3%
+                      transform: initial
+                  - type: state-label
+                    entity: sensor.lumi_lumi_weather_humidity
+                    style:
+                      color: black
+                      right: 21%
+                      top: 3%
+                      transform: initial
+                  - type: state-icon
+                    entity: automation.alarm_motion
+                    style:
+                      right: 35%
+                      top: 1%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: toggle
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.light_living_room_local
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 12%
+                      top: 32%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 12%
+                      top: 48%
+                    text: Living
+                  - type: custom:button-card
+                    color: auto
+                    entity: switch.light_dinner_table_local
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 31%
+                      top: 32%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 31%
+                      top: 48%
+                    text: Eettafel
+                  - type: custom:button-card
+                    color: auto
+                    entity: cover.cover_group
+                    show_name: false
+                    state:
+                      - value: closed
+                        color: var(--paper-item-icon-active-color)
+                      - value: unavailable
+                        color: grey
+                      - value: open
+                        color: rgb(77, 109, 189)
+                    style:
+                      left: 50%
+                      top: 32%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 50%
+                      top: 48%
+                    text: Gordijnen
+                  - type: custom:button-card
+                    color: auto
+                    entity: switch.smart_plug_tv_local
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 69%
+                      top: 32%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 69%
+                      top: 48%
+                    text: Plug TV
+                  - type: custom:button-card
+                    color: grey
+                    entity: binary_sensor.desktop_pc
+                    icon: mdi:desktop-classic
+                    show_name: false
+                    state:
+                      - value: 'on'
+                        color: var(--paper-item-icon-active-color)
+                      - value: paused
+                        color: blue
+                      - value: 'off'
+                        color: white
+                    style:
+                      left: 12%
+                      top: 72%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: call-service
+                      service: script.toggle_pc
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 12%
+                      top: 88%
+                    text: Computer
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.kitchen_light
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 88%
+                      top: 32%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 88%
+                      top: 48%
+                    text: Keuken
+                  - type: custom:button-card
+                    color: grey
+                    entity: binary_sensor.xbox_one
+                    icon: mdi:microsoft-xbox
+                    show_name: false
+                    state:
+                      - value: 'on'
+                        color: var(--paper-item-icon-active-color)
+                      - value: playing
+                        color: green
+                      - value: paused
+                        color: blue
+                      - value: 'off'
+                        color: rgb(77, 109, 189)
+                      - value: idle
+                        color: purple
+                    style:
+                      left: 31%
+                      top: 72%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: call-service
+                      service: script.turn_off_xbox
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 31%
+                      top: 88%
+                    text: Xbox
+                  - type: custom:button-card
+                    color: grey
+                    entity: media_player.chromecast
+                    show_name: false
+                    state:
+                      - value: 'on'
+                        color: var(--paper-item-icon-active-color)
+                      - value: playing
+                        color: green
+                      - value: paused
+                        color: blue
+                      - value: 'off'
+                        color: rgb(77, 109, 189)
+                      - value: idle
+                        color: purple
+                    style:
+                      left: 50%
+                      top: 72%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 50%
+                      top: 88%
+                    text: Chromecast
+                  - type: custom:button-card
+                    color: auto
+                    entity: switch.smart_plug_kelder_local
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 69%
+                      top: 72%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 69%
+                      top: 88%
+                    text: Kelder
+                  - type: custom:button-card
+                    color: auto
+                    entity: sensor.dishwasher_operation_state
+                    icon: mdi:dishwasher
+                    show_name: false
+                    state:
+                      - value: Run
+                        color: var(--paper-item-icon-active-color)
+                      - value: Finished
+                        color: green
+                      - value: Inactive
+                        color: rgb(77, 109, 189)
+                      - value: idle
+                        color: purple
+                    style:
+                      left: 88%
+                      top: 72%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    entity: sensor.dishwasher_program_progress
+                    show_state: true
+                    show_icon: false
+                    show_name: false
+                    style:
+                      left: 88%
+                      top: 72%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: rgb(0, 0, 0, 0)
+                        - font-size: 14px
+                        - color: white
+                    state:
+                      - value: 100
+                        styles:
+                          card:
+                            - font-size: 14px
+                            - color: rgb(255, 255, 255, 0)
+                      - value: 0
+                        styles:
+                          card:
+                            - font-size: 14px
+                            - color: rgb(255, 255, 255, 0)
+                      - value: unavailable
+                        styles:
+                          card:
+                            - font-size: 14px
+                            - color: rgb(255, 255, 255, 0)
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: state-label
+                    entity: sensor.dishwasher_operation_state
+                    style:
+                      color: black
+                      left: 88%
+                      top: 88%
+                  - type: conditional
+                    conditions:
+                      - entity: sensor.dishwasher_operation_state
+                        state_not: Inactive
+                    elements:
+                      - type: state-label
+                        entity: sensor.dishwasher_remaining
+                        style:
+                          color: black
+                          font-size: 15px
+                          left: 97%
+                          top: 60%
+                          transform: translate(-100%,-50%)
+            title: null
+            type: custom:vertical-stack-in-card
+          - cards:
+              - type: picture-elements
+                image: local/Gang_slim.png
+                elements:
+                  - type: custom:text-element
+                    text: Gang
+                    style:
+                      color: black
+                      font-size: 175%
+                      left: 5%
+                      top: 7%
+                      transform: initial
+                  - type: state-icon
+                    entity: automation.alarm_home
+                    style:
+                      right: 4%
+                      top: 1%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: state-icon
+                    entity: input_boolean.away_mode
+                    style:
+                      right: 15%
+                      top: 2%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: toggle
+                  - type: custom:button-card
+                    color: auto
+                    entity: binary_sensor.motion_sensor_hallway_down_on_off
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 12%
+                      top: 55%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.light_hallway_down_level_on_off
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 24%
+                      top: 55%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 18%
+                      top: 85%
+                    text: Beneden
+                  - type: custom:button-card
+                    color: auto
+                    entity: binary_sensor.motion_sensor_hallway_on_off
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 44%
+                      top: 55%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: auto
+                    entity: switch.licht_gang_switch
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 56%
+                      top: 55%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 50%
+                      top: 85%
+                    text: Gang
+                  - type: custom:button-card
+                    color: auto
+                    entity: binary_sensor.motion_sensor_hallway_up_on_off
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 76%
+                      top: 55%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: auto
+                    entity: switch.light_hallway_up_local
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 88%
+                      top: 55%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 82%
+                      top: 85%
+                    text: Boven
+            title: null
+            type: custom:vertical-stack-in-card
+          - cards:
+              - type: picture-elements
+                image: local/Garage_slim.png
+                elements:
+                  - type: custom:text-element
+                    text: Garage
+                    style:
+                      color: black
+                      font-size: 175%
+                      left: 5%
+                      top: 7%
+                      transform: initial
+                  - type: state-icon
+                    entity: binary_sensor.superb_charging_cable_connected
+                    style:
+                      right: 4%
+                      top: 2%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                  - type: state-icon
+                    entity: switch.superb_charging
+                    style:
+                      right: 15%
+                      top: 2%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                  - type: custom:button-card
+                    entity: sensor.superb_battery_level
+                    show_name: false
+                    color: orange
+                    state:
+                      - color: green
+                        operator: '>'
+                        value: 70
+                      - color: red
+                        operator: <
+                        value: 30
+                    style:
+                      left: 12%
+                      top: 55%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: call-service
+                      service: switch.toggle
+                      service_data: {}
+                      target:
+                        entity_id: switch.superb_charging
+                    hold_action:
+                      action: more-info
+                  - type: state-label
+                    entity: sensor.superb_battery_level
+                    style:
+                      color: white
+                      left: 12%
+                      top: 55%
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 12%
+                      top: 80%
+                    text: Superb
+                  - type: conditional
+                    conditions:
+                      - entity: binary_sensor.superb_vehicle_moving
+                        state: 'on'
+                    elements:
+                      - type: custom:text-element
+                        text: moving
+                        style:
+                          color: black
+                          left: 12%
+                          top: 92%
+                  - type: custom:button-card
+                    color: auto
+                    entity: input_boolean.car_force_charging
+                    show_name: false
+                    style:
+                      left: 31%
+                      top: 55%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 31%
+                      top: 80%
+                    text: Force
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 31%
+                      top: 92%
+                    text: charging
+                  - type: custom:button-card
+                    color: auto
+                    entity: sensor.dryer_dryer_job_state
+                    show_name: false
+                    state:
+                      - value: drying
+                        color: var(--paper-item-icon-active-color)
+                      - value: finished
+                        color: green
+                      - value: none
+                        color: rgb(77, 109, 189)
+                      - value: cooling
+                        color: blue
+                    style:
+                      left: 50%
+                      top: 55%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: conditional
+                    conditions:
+                      - entity: sensor.dryer_dryer_job_state
+                        state_not: none
+                    elements:
+                      - type: state-label
+                        entity: sensor.dryer_dryer_job_state
+                        style:
+                          left: 50%
+                          top: 85%
+                          color: black
+                  - type: conditional
+                    conditions:
+                      - entity: sensor.dryer_dryer_job_state
+                        state: none
+                    elements:
+                      - type: state-label
+                        entity: sensor.dryer_dryer_machine_state
+                        style:
+                          left: 50%
+                          top: 85%
+                          color: black
+                  - type: conditional
+                    conditions:
+                      - entity: sensor.dryer_dryer_job_state
+                        state_not: none
+                      - entity: sensor.dryer_dryer_job_state
+                        state_not: finished
+                    elements:
+                      - type: state-label
+                        entity: sensor.dryer_remaining
+                        style:
+                          color: black
+                          font-size: 15px
+                          left: 50%
+                          top: 30%
+                  - type: custom:button-card
+                    entity: binary_sensor.garage_door_open
+                    show_state: false
+                    show_name: false
+                    state:
+                      - value: unknown
+                        color: grey
+                      - value: 'off'
+                        icon: mdi:garage-variant
+                        color: rgb(77, 109, 189)
+                      - value: 'on'
+                        icon: mdi:garage-open-variant
+                        color: var(--paper-item-icon-active-color)
+                    style:
+                      left: 69%
+                      top: 55%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 30px
+                        - height: 35px
+                    tap_action:
+                      action: call-service
+                      service: switch.turn_on
+                      service_data:
+                        entity_id: switch.garage_remote
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 69%
+                      top: 85%
+                    text: Garage
+                  - type: custom:gauge-card
+                    entity: sensor.regenwaterput_volume
+                    scale: 15px
+                    needle: true
+                    min: 0
+                    max: 5000
+                    severity:
+                      red: 1000
+                      green: 2000
+                      amber: 1500
+                    style:
+                      left: 88%
+                      top: 55%
+                  - type: custom:text-element
+                    style:
+                      color: black
+                      left: 88%
+                      top: 85%
+                    text: Regenwater
+                  - type: custom:button-card
+                    entity: timer.alarm_grace_period
+                    name: Alarm arming in
+                    layout: icon_name_state
+                    label: |
+                      [[[
+                        var loc = states['timer.alarm_grace_period'].state;
+                        return 'Alarm arming in ' + (loc) ;
+                      ]]]
+                    show_state: true
+                    show_icon: false
+                    show_name: true
+                    show_label: false
+                    style:
+                      left: '-10%'
+                      top: 85%
+                      transform: initial
+                    styles:
+                      card:
+                        - border-radius: 0px
+                        - width: 300px
+                        - height: 40px
+                        - background-color: rgb(0, 0, 0, 0)
+                        - box-shadow: 0px 0px 0px 0px
+                      label:
+                        - font-size: 14px
+                        - color: white
+                    state:
+                      - value: idle
+                        styles:
+                          name:
+                            - font-size: 14px
+                            - color: rgb(255, 255, 255, 0)
+            title: null
+            type: custom:vertical-stack-in-card
+          - show_name: false
+            show_icon: true
+            show_state: false
+            type: glance
+            entities:
+              - entity: scene.tv_power
+                name: TV
+                style: |
+                  :host {
+                    --paper-item-icon-color: 
+                      {% if is_state('media_player.tv_2', 'idle') %}
+                        rgb(0, 204, 102)
+                      {% else %}
+                        rgb(255, 255, 255)
+                      {% endif %}
+                      ;
+                  }
+                icon: mdi:television
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.tv_power
+              - entity: scene.loudspeaker_power
+                name: Geluid
+                icon: mdi:speaker
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.loudspeaker_power
+              - entity: scene.audio_xbox
+                name: geluid xbox
+                style: |
+                  :host {
+                    --paper-item-icon-color: 
+                      {% if is_state('binary_sensor.xbox_one', 'on') %}
+                        rgb(0, 204, 102)
+                      {% else %}
+                        rgb(255, 255, 255)
+                      {% endif %}
+                      ;
+                  }
+                icon: mdi:microsoft-xbox
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.audio_xbox
+              - entity: scene.audio_chromecast
+                name: geluid chromecast
+                style: |
+                  :host {
+                    --paper-item-icon-color: 
+                      {% if is_state('media_player.chromecast', 'playing') %}
+                        rgb(0, 204, 102) 
+                      {% elif is_state('media_player.chromecast', 'paused') %}
+                        rgb(0, 102, 255) 
+                      {% elif is_state('media_player.chromecast', 'unavailable') %}
+                        grey
+                      {% else %}
+                        rgb(255, 255, 255)
+                      {% endif %}
+                      ;
+                  }
+                icon: mdi:google-chrome
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.audio_chromecast
+              - entity: scene.tv_ok
+                icon: mdi:adjust
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.tv_ok
+              - entity: scene.vol
+                icon: mdi:volume-low
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.vol
+              - entity: scene.vol_2
+                icon: mdi:volume-high
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.vol_2
+              - entity: scene.tv_input3
+                icon: mdi:remote
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.tv_input3
+              - entity: scene.tv_input
+                name: TV switcher
+                icon: mdi:remote
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.tv_input
+              - entity: script.evening_scene
+                tap_action:
+                  action: call-service
+                  service: script.evening_scene
+                  service_data: {}
+                  target: {}
+            title: Afstandsbediening
+            state_color: false
+      - type: vertical-stack
+        cards:
+          - cards:
+              - type: picture-elements
+                image: local/bedroom1_slim.png
+                elements:
+                  - type: custom:text-element
+                    text: Wout
+                    style:
+                      color: black
+                      font-size: 175%
+                      left: 5%
+                      top: 10%
+                      transform: initial
+                  - type: state-icon
+                    entity: automation.licht_wout_weekdagen
+                    style:
+                      right: 40%
+                      top: 1%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: toggle
+                  - type: state-label
+                    entity: sensor.ble_temperature_room_sensor_wout
+                    style:
+                      color: black
+                      font-size: 130%
+                      right: 0%
+                      top: 3%
+                      transform: initial
+                      background-color: rgba(255, 255, 255, 0.3)
+                  - type: state-label
+                    entity: sensor.ble_humidity_room_sensor_wout
+                    style:
+                      color: black
+                      right: 20%
+                      top: 3%
+                      transform: initial
+                  - type: state-icon
+                    icon: mdi:fire
+                    entity: climate.thermostaat_wout_thermostat
+                    style:
+                      right: 30%
+                      top: 1%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: more-info
+                  - type: custom:text-element
+                    text: 'Target:'
+                    style:
+                      color: black
+                      font-size: 100%
+                      Right: 20%
+                      top: 25%
+                      transform: initial
+                  - type: state-label
+                    entity: input_number.wout_set_temperature
+                    style:
+                      color: black
+                      font-size: 100%
+                      right: 0%
+                      top: 20%
+                      transform: initial
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.wout_on_off
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 20%
+                      top: 70%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: auto
+                    entity: binary_sensor.door_wout
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                      - value: 'off'
+                        icon: mdi:door
+                        color: rgb(77, 109, 189)
+                      - value: 'on'
+                        icon: mdi:door-closed
+                        color: var(--paper-item-icon-active-color)
+                    style:
+                      left: 80%
+                      top: 70%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: grey
+                    entity: cover.gordijnen_wout
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                      - value: closed
+                        icon: mdi:blinds
+                        color: var(--paper-item-icon-active-color)
+                      - value: open
+                        icon: mdi:blinds-open
+                        color: rgb(77, 109, 189)
+                    style:
+                      left: 60%
+                      top: 70%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    entity: cover.gordijnen_wout
+                    label: |
+                      [[[
+                        var loc = states['cover.gordijnen_wout'].attributes.current_position;
+                        return (loc) + '%';
+                      ]]]
+                    show_state: false
+                    show_icon: false
+                    show_name: false
+                    show_label: true
+                    style:
+                      left: 60%
+                      top: 70%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: rgb(0, 0, 0, 0)
+                      label:
+                        - font-size: 14px
+                        - color: yellow
+                    state:
+                      - value: open
+                        styles:
+                          label:
+                            - font-size: 14px
+                            - color: rgb(255, 255, 255, 0)
+                      - value: closed
+                        styles:
+                          label:
+                            - font-size: 14px
+                            - color: rgb(255, 255, 255, 0)
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: state-icon
+                    icon: mdi:radiator
+                    entity: climate.thermostaat_wout_thermostat
+                    style:
+                      left: 40%
+                      top: 70%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      background-color: '#424242'
+                      border-radius: 40px
+                    tap_action:
+                      action: call-service
+                      service: script.thermostat_wout_toggle
+                      service_data:
+                        climate_entity: climate.thermostaat_wout_thermostat
+                  - type: state-label
+                    entity: climate.thermostaat_wout_thermostat
+                    attribute: hvac_action
+                    style:
+                      left: 40%
+                      top: 35%
+                      color: black
+                      font-size: 100%
+            title: null
+            type: custom:vertical-stack-in-card
+          - cards:
+              - type: picture-elements
+                image: local/bedroom2_slim.jpg
+                elements:
+                  - type: custom:text-element
+                    text: Jana
+                    style:
+                      color: black
+                      font-size: 175%
+                      left: 5%
+                      top: 10%
+                      transform: initial
+                  - type: state-icon
+                    entity: automation.licht_jana_weekdagen
+                    style:
+                      right: 40%
+                      top: 1%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: toggle
+                  - type: state-label
+                    entity: sensor.ble_temperature_room_sensor_jana
+                    style:
+                      color: black
+                      font-size: 130%
+                      right: 0%
+                      top: 3%
+                      transform: initial
+                  - type: state-label
+                    entity: sensor.ble_humidity_room_sensor_jana
+                    style:
+                      color: black
+                      right: 20%
+                      top: 3%
+                      transform: initial
+                  - type: state-icon
+                    icon: mdi:fire
+                    entity: climate.thermostaat_jana_thermostat
+                    style:
+                      right: 30%
+                      top: 1%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: more-info
+                  - type: custom:text-element
+                    text: 'Target:'
+                    style:
+                      color: black
+                      font-size: 100%
+                      Right: 20%
+                      top: 25%
+                      transform: initial
+                  - type: state-label
+                    entity: input_number.jana_set_temperature
+                    style:
+                      color: black
+                      font-size: 100%
+                      right: 0%
+                      top: 20%
+                      transform: initial
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.light_jana
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 20%
+                      top: 70%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: auto
+                    entity: binary_sensor.door_jana
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                      - value: 'off'
+                        icon: mdi:door
+                        color: rgb(77, 109, 189)
+                      - value: 'on'
+                        icon: mdi:door-closed
+                        color: var(--paper-item-icon-active-color)
+                    style:
+                      left: 80%
+                      top: 70%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: grey
+                    entity: cover.gordijn_jana_local
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                      - value: closed
+                        icon: mdi:blinds
+                        color: var(--paper-item-icon-active-color)
+                      - value: open
+                        icon: mdi:blinds-open
+                        color: rgb(77, 109, 189)
+                    style:
+                      left: 60%
+                      top: 70%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    entity: cover.gordijn_jana_local
+                    label: |
+                      [[[
+                        var loc = states['cover.gordijn_jana_local'].attributes.current_position;
+                        return (loc) + '%';
+                      ]]]
+                    show_state: false
+                    show_icon: false
+                    show_name: false
+                    show_label: true
+                    style:
+                      left: 60%
+                      top: 70%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: rgb(0, 0, 0, 0)
+                      label:
+                        - font-size: 14px
+                        - color: yellow
+                    state:
+                      - value: open
+                        styles:
+                          label:
+                            - font-size: 14px
+                            - color: rgb(255, 255, 255, 0)
+                      - value: closed
+                        styles:
+                          label:
+                            - font-size: 14px
+                            - color: rgb(255, 255, 255, 0)
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: state-icon
+                    icon: mdi:radiator
+                    entity: climate.thermostaat_jana_thermostat
+                    style:
+                      left: 40%
+                      top: 70%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      background-color: '#424242'
+                      border-radius: 40px
+                    tap_action:
+                      action: call-service
+                      service: script.thermostat_jana_toggle
+                      service_data:
+                        climate_entity: climate.thermostaat_jana_thermostat
+                  - type: state-label
+                    entity: climate.thermostaat_jana_thermostat
+                    attribute: hvac_action
+                    style:
+                      left: 40%
+                      top: 35%
+                      color: black
+                      font-size: 100%
+            title: null
+            type: custom:vertical-stack-in-card
+          - cards:
+              - type: picture-elements
+                image: local/bathroom_slim.jpg
+                elements:
+                  - type: custom:text-element
+                    text: Badkamer
+                    style:
+                      color: black
+                      font-size: 175%
+                      left: 5%
+                      top: 10%
+                      transform: initial
+                  - type: state-label
+                    entity: sensor.ble_temperature_room_sensor_bathroom
+                    style:
+                      color: black
+                      font-size: 130%
+                      right: 0%
+                      top: 3%
+                      transform: initial
+                  - type: state-label
+                    entity: sensor.ble_humidity_room_sensor_bathroom
+                    style:
+                      color: black
+                      right: 18%
+                      top: 3%
+                      transform: initial
+                  - type: state-icon
+                    icon: mdi:fire
+                    entity: climate.thermostaat_bathroom_thermostat
+                    style:
+                      right: 30%
+                      top: 1%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      transform: initial
+                    tap_action:
+                      action: more-info
+                  - type: custom:text-element
+                    text: 'Target:'
+                    style:
+                      color: black
+                      font-size: 100%
+                      Right: 20%
+                      top: 25%
+                      transform: initial
+                  - type: state-label
+                    entity: input_number.bathroom_set_temperature
+                    style:
+                      color: black
+                      font-size: 100%
+                      right: 0%
+                      top: 20%
+                      transform: initial
+                  - type: custom:button-card
+                    color: auto
+                    entity: switch.light_bathroom_local
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 25%
+                      top: 70%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: auto
+                    entity: binary_sensor.door_bathroom
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                      - value: 'off'
+                        icon: mdi:door
+                        color: rgb(77, 109, 189)
+                      - value: 'on'
+                        icon: mdi:door-closed
+                        color: var(--paper-item-icon-active-color)
+                    style:
+                      left: 75%
+                      top: 70%
+                    styles:
+                      card:
+                        - border-radius: 40px
+                        - width: 40px
+                        - height: 40px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 25px
+                        - height: 25px
+                    tap_action:
+                      action: more-info
+                    hold_action:
+                      action: more-info
+                  - type: state-icon
+                    icon: mdi:radiator
+                    entity: climate.thermostaat_bathroom_thermostat
+                    style:
+                      left: 50%
+                      top: 70%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                      background-color: '#424242'
+                      border-radius: 40px
+                    tap_action:
+                      action: call-service
+                      service: script.thermostat_bathroom_toggle
+                      service_data:
+                        climate_entity: climate.thermostaat_bathroom_thermostat
+                  - type: state-label
+                    entity: climate.thermostaat_bathroom_thermostat
+                    attribute: hvac_action
+                    style:
+                      left: 50%
+                      top: 35%
+                      color: black
+                      font-size: 100%
+            title: null
+            type: custom:vertical-stack-in-card
+          - cards:
+              - type: picture-elements
+                image: local/Speelkamer_slim.jpg
+                elements:
+                  - type: custom:text-element
+                    text: Speelkamer
+                    style:
+                      color: black
+                      font-size: 145%
+                      left: 5%
+                      top: 10%
+                      transform: initial
+                  - type: state-label
+                    entity: sensor.ble_temperature_room_sensor_playroom
+                    style:
+                      color: black
+                      font-size: 130%
+                      right: 0%
+                      top: 6%
+                      transform: initial
+                  - type: state-label
+                    entity: sensor.ble_humidity_room_sensor_playroom
+                    style:
+                      color: black
+                      right: 20%
+                      top: 6%
+                      transform: initial
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.playroom
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 60%
+                      top: 17%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 30px
+                        - width: 29px
+                        - height: 29px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 20px
+                        - height: 20px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:text-element
+                    text: Slaapkamer
+                    style:
+                      color: black
+                      font-size: 145%
+                      left: 5%
+                      top: 34%
+                      transform: initial
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.bedroom_mood_lights
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 50%
+                      top: 41%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 30px
+                        - width: 29px
+                        - height: 29px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 20px
+                        - height: 20px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.bedroom_lights
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 60%
+                      top: 41%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 30px
+                        - width: 29px
+                        - height: 29px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 20px
+                        - height: 20px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: state-label
+                    entity: sensor.ble_temperature_room_sensor_bedroom
+                    style:
+                      color: black
+                      font-size: 130%
+                      right: 0%
+                      top: 30%
+                      transform: initial
+                  - type: state-label
+                    entity: sensor.ble_humidity_room_sensor_bedroom
+                    style:
+                      color: black
+                      right: 20%
+                      top: 30%
+                      transform: initial
+                  - type: custom:text-element
+                    text: Bureau
+                    style:
+                      color: black
+                      font-size: 145%
+                      left: 5%
+                      top: 58%
+                      transform: initial
+                  - type: custom:text-element
+                    text: Kelder
+                    style:
+                      color: black
+                      font-size: 145%
+                      left: 5%
+                      top: 82%
+                      transform: initial
+                  - type: custom:button-card
+                    color: auto
+                    entity: light.light_kelder
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 60%
+                      top: 85%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 30px
+                        - width: 29px
+                        - height: 29px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 20px
+                        - height: 20px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: custom:button-card
+                    color: auto
+                    entity: binary_sensor.door_sensor_kelder
+                    show_name: false
+                    state:
+                      - value: unavailable
+                        color: grey
+                    style:
+                      left: 50%
+                      top: 85%
+                      '--paper-item-icon-color': rgb(77, 109, 189)
+                    styles:
+                      card:
+                        - border-radius: 30px
+                        - width: 29px
+                        - height: 29px
+                        - background-color: '#424242'
+                      icon:
+                        - width: 20px
+                        - height: 20px
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - type: state-label
+                    entity: sensor.ble_temperature_room_sensor_office
+                    style:
+                      color: black
+                      font-size: 130%
+                      right: 0%
+                      top: 53%
+                      transform: initial
+                  - type: state-label
+                    entity: sensor.ble_humidity_room_sensor_office
+                    style:
+                      color: black
+                      right: 20%
+                      top: 53%
+                      transform: initial
+            title: null
+            type: custom:vertical-stack-in-card
+          - type: grid
+            cards:
+              - type: gauge
+                min: 0
+                max: 100
+                entity: sensor.sm_a530f_battery_level
+                name: Annelies
+                severity:
+                  green: 70
+                  yellow: 40
+                  red: 0
+              - type: gauge
+                entity: sensor.sm_g980f_battery_level
+                min: 0
+                max: 100
+                name: Nick
+                severity:
+                  green: 70
+                  yellow: 40
+                  red: 0
+              - type: gauge
+                min: 0
+                max: 100
+                entity: sensor.sm_g950f_battery_level
+                name: Wout
+                severity:
+                  green: 70
+                  yellow: 40
+                  red: 0
+              - type: gauge
+                min: 0
+                max: 100
+                entity: sensor.sm_t500_battery_level
+                name: Tablet
+                severity:
+                  green: 70
+                  yellow: 40
+                  red: 0
+            columns: 4
+          - type: custom:mini-graph-card
+            entities:
+              - sensor.zwembad_temperature_mqtt
+            show:
+              labels: true
+              legend: false
+            align_state: right
+            font_size: 60
+            hours_to_show: 48
+            color_thresholds:
+              - value: 20
+                color: '#f39c12'
+              - value: 25
+                color: '#d35400'
+              - value: 30
+                color: '#c0392b'
+            style: |
+              ha-card .states.flex::after {
+                color: grey;
+                font-size: 15px;
+                content: "Battery: {{states('sensor.pool_battery_voltage_mqtt')}} V";
+              }
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:simple-clock-card
+                use_military: true
+                hide_seconds: true
+                font_size: 3.5rem
+                padding_size: 20px
+              - type: custom:bignumber-card
+                entity: sensor.openweathermap_temperature
+                scale: 24px
+                round: 1
+          - type: custom:tesla-style-solar-power-card
+            show_w_not_kw: 1
+            generation_to_battery_entity: sensor.pv_battery_charge
+            generation_to_house_entity: sensor.pv_to_house
+            generation_to_grid_entity: sensor.grid_sell
+            grid_to_house_entity: sensor.grid_buy
+            battery_to_house_entity: sensor.pv_battery_use
+            battery_extra_entity: sensor.battery_state_of_charge
+            generation_extra_entity: sensor.inverter_temperature_radiator
+            grid_entity: sensor.active_power
+            grid_extra_entity: sensor.grid_production_consumption
+            house_entity: sensor.house_consumption
+            house_extra_entity: sensor.voltage_phase_1
+            generation_entity: sensor.pv_power
+            battery_entity: sensor.battery_state_of_charge
+            card_mod:
+              style: |
+                ha-card {
+                  background-color: 
+                  {% if (states("sensor.grid_production_consumption") | float(0) > 4.000) -%}
+                  rgb(160,20,0,0.4);
+                  {%- elif (states("sensor.grid_production_consumption") | float(0) > 3.000) -%}
+                  rgb(120,70,0,0.4);
+                  {%- elif (states("sensor.grid_production_consumption") | float(0) > 2.000) -%}
+                  rgb(120,120,0,0.4);
+                  {%- elif (states("sensor.grid_production_consumption") | float(0) > 0.250) -%}
+                  rgb(5,5,5,0.4);
+                  {%- else -%}
+                  rgb(0,120,0,0.4);
+                  {%- endif %}
+                }
+          - type: custom:neerslag-card
+            title: Buienradar
+            entities:
+              - sensor.neerslag_buienradar_regen_data
+  - title: Media control
+    path: media-control
+    icon: mdi:remote
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - show_name: false
+            show_icon: true
+            show_state: false
+            type: glance
+            entities:
+              - entity: scene.tv_power
+                name: TV
+                style: |
+                  :host {
+                    --paper-item-icon-color: 
+                      {% if is_state('media_player.tv_2', 'idle') %}
+                        rgb(0, 204, 102)
+                      {% else %}
+                        rgb(255, 255, 255)
+                      {% endif %}
+                      ;
+                  }
+                icon: mdi:television
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.tv_power
+              - entity: scene.loudspeaker_power
+                name: Geluid
+                icon: mdi:speaker
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.loudspeaker_power
+              - entity: scene.audio_xbox
+                name: geluid xbox
+                style: |
+                  :host {
+                    --paper-item-icon-color: 
+                      {% if is_state('binary_sensor.xbox_one', 'on') %}
+                        rgb(0, 204, 102)
+                      {% else %}
+                        rgb(255, 255, 255)
+                      {% endif %}
+                      ;
+                  }
+                icon: mdi:microsoft-xbox
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.audio_xbox
+              - entity: scene.audio_chromecast
+                name: geluid chromecast
+                style: |
+                  :host {
+                    --paper-item-icon-color: 
+                      {% if is_state('media_player.chromecast', 'playing') %}
+                        rgb(0, 204, 102) 
+                      {% elif is_state('media_player.chromecast', 'paused') %}
+                        rgb(0, 102, 255) 
+                      {% elif is_state('media_player.chromecast', 'unavailable') %}
+                        grey
+                      {% else %}
+                        rgb(255, 255, 255)
+                      {% endif %}
+                      ;
+                  }
+                icon: mdi:google-chrome
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.audio_chromecast
+              - entity: scene.tv_ok
+                icon: mdi:adjust
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.tv_ok
+              - entity: scene.vol
+                icon: mdi:volume-low
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.vol
+              - entity: scene.vol_2
+                icon: mdi:volume-high
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.vol_2
+              - entity: scene.tv_input3
+                icon: mdi:remote
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.tv_input3
+              - entity: scene.tv_input
+                name: TV switcher
+                icon: mdi:remote
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.tv_input
+              - entity: script.evening_scene
+                tap_action:
+                  action: call-service
+                  service: script.evening_scene
+                  service_data: {}
+                  target: {}
+            title: Afstandsbediening
+            state_color: false
+          - type: horizontal-stack
+            cards:
+              - type: picture
+                tap_action:
+                  action: call-service
+                  service: script.play_stubru_on_nest
+                  service_data: {}
+                  target: {}
+                hold_action:
+                  action: none
+                image: /local/stubru.png
+              - type: picture
+                tap_action:
+                  action: call-service
+                  service: script.play_spotify_on_nest
+                  service_data: {}
+                  target: {}
+                hold_action:
+                  action: none
+                image: /local/spotify.png
+              - type: button
+                tap_action:
+                  action: none
+                entity: sensor.media_off
+                name: Media off
+                show_state: true
+                show_icon: false
+              - type: button
+                tap_action:
+                  action: toggle
+                entity: automation.shut_down_media
+                name: Shut down
+          - type: picture-elements
+            image: >-
+              data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjEwIiBoZWlnaHQ9IjkwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6Y2M9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL25zIyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogPG1ldGFkYXRhPgogIDxyZGY6UkRGPgogICA8Y2M6V29yayByZGY6YWJvdXQ9IiI+CiAgICA8ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD4KICAgIDxkYzp0eXBlIHJkZjpyZXNvdXJjZT0iaHR0cDovL3B1cmwub3JnL2RjL2RjbWl0eXBlL1N0aWxsSW1hZ2UiLz4KICAgIDxkYzp0aXRsZS8+CiAgIDwvY2M6V29yaz4KICA8L3JkZjpSREY+CiA8L21ldGFkYXRhPgogPGc+CiAgPHRpdGxlPmJhY2tncm91bmQ8L3RpdGxlPgogIDxyZWN0IGlkPSJjYW52YXNfYmFja2dyb3VuZCIgeD0iLTEiIHk9Ii0xIiB3aWR0aD0iODAyIiBoZWlnaHQ9IjYwMiIgZmlsbD0ibm9uZSIvPgogPC9nPgogPGNpcmNsZSBjeD0iOTkuMTgiIGN5PSIyMCIgcj0iMTQiIGZpbGw9IiNmZmYiLz4KIDxjaXJjbGUgY3g9IjE0OC4xOCIgY3k9IjU0IiByPSIxMC41IiBmaWxsPSIjMzMzIiBzdHJva2U9IiNmZmYiLz4KIDxwYXRoIGQ9Im0xNTMuMTYgNTkuMzVjLTAuMTEgMC4yMDYtMC4zNCAwLjMyNS0wLjYyNyAwLjMyNWgtMS4zNjhjLTAuNDU1IDAtMC45ODQtMC4yODktMS4yMy0wLjY3MmwtMS43MDEtMi42NTdjLTAuMDMtMC4wNDUtMC4wNTUtMC4wNjItMC4wNjItMC4wNjQgNGUtMyAyZS0zIC0wLjAyMSAwLjAxOC0wLjA1MSAwLjA2NWwtMS43MDkgMi42NTdjLTAuMjQ3IDAuMzgzLTAuNzc2IDAuNjcxLTEuMjMgMC42NzFoLTEuMzUzYy0wLjI4OCAwLTAuNTE2LTAuMTE4LTAuNjI4LTAuMzI0LTAuMTExLTAuMjA2LTAuMDg1LTAuNDYzIDAuMDczLTAuNzAzbDIuOTc2LTQuNTQ1YTAuNzA0IDAuNzA0IDAgMCAwIDJlLTMgLTAuNjc2bC0yLjY0LTQuMDc0Yy0wLjE1NS0wLjI0MS0wLjE4LTAuNDk4LTAuMDY5LTAuNzA0IDAuMTEzLTAuMjA2IDAuMzQyLTAuMzI0IDAuNjMtMC4zMjRoMS4yODZjMC40NTcgMCAwLjk4NCAwLjI5MiAxLjIyNSAwLjY4bDEuNDkgMi4zODVhMC4yMyAwLjIzIDAgMCAwIDAuMDQ4IDAuMDU3YzNlLTMgLThlLTMgMC4wMi0wLjAyNCAwLjA0LTAuMDU3bDEuNDU1LTIuMzhjMC4yMzktMC4zOSAwLjc2NC0wLjY4NSAxLjIyMi0wLjY4NWgxLjI2N2MwLjI4NyAwIDAuNTE2IDAuMTE4IDAuNjI4IDAuMzI0IDAuMTEzIDAuMjA2IDAuMDg5IDAuNDYyLTAuMDY3IDAuNzA0bC0yLjY1OCA0LjE1YTAuNjk5IDAuNjk5IDAgMCAwIDVlLTMgMC42NzVsMi45NyA0LjQ3YzAuMTU5IDAuMjQgMC4xODcgMC40OTYgMC4wNzYgMC43MDJ6IiBmaWxsPSIjMmQ4OWVmIi8+CiA8Y2lyY2xlIGN4PSIxNjguMTgiIGN5PSI3NCIgcj0iMTAuNSIgZmlsbD0iIzMzMyIgc3Ryb2tlPSIjZmZmIi8+CiA8cGF0aCBkPSJtMTczLjU3IDc5LjM2MmMtMC4xMzQgMC4yLTAuMzY4IDAuMzE0LTAuNjQyIDAuMzE0aC0xLjExM2MtMC40OCAwLTAuOTc1LTAuMzQtMS4xNDctMC43ODlsLTAuNDktMS4yNzVhMC42NDIgMC42NDIgMCAwIDAtMC41MzItMC4zNjVoLTMuMDM2YTAuNjIgMC42MiAwIDAgMC0wLjUyIDAuMzY0bC0wLjQ2IDEuMjY3Yy0wLjE2MyAwLjQ0Ny0wLjY2MyAwLjc5OC0xLjE0IDAuNzk4aC0xLjA1M2MtMC4yNzMgMC0wLjUwOC0wLjExNS0wLjY0NC0wLjMxMy0wLjEzNi0wLjE5OS0wLjE1Ny0wLjQ1OS0wLjA1OC0wLjcxM2wzLjcxNi05LjU0YTEuMjkzIDEuMjkzIDAgMCAxIDEuMTUtMC43ODZoMS4wNDdjMC40OCAwIDAuOTc2IDAuMzM2IDEuMTU0IDAuNzgxbDMuODIgOS41NDVjMC4xMDQgMC4yNTMgMC4wODUgMC41MTMtMC4wNSAwLjcxMnptLTUuNDY3LTcuMjU3LTAuOTI2IDIuNTQyYy0wLjAyIDAuMDU1LTAuMDE4IDAuMDk1LThlLTMgMC4xMDkgMC4wMSAwLjAxMyAwLjA0NiAwLjAzIDAuMTA0IDAuMDNoMS42ODFjMC4wNjcgMCAwLjA5Ny0wLjAxOCAwLjEwMy0wLjAyOCA3ZS0zIC0wLjAxMSAwLjAxNC0wLjA0NS0wLjAxLTAuMTA3eiIgZmlsbD0iIzVkYzIxZSIvPgogPGNpcmNsZSBjeD0iMTg4LjE4IiBjeT0iNTQiIHI9IjEwLjUiIGZpbGw9IiMzMzMiIHN0cm9rZT0iI2ZmZiIvPgogPHBhdGggZD0ibTE5My41NCA1OC4xMThhMy40MiAzLjQyIDAgMCAxLTEuMTEgMS4zMThjLTAuNDY3IDAuMzI3LTEuMDQ2IDAuNTMzLTEuNzIyIDAuNjA3LTAuNDE1IDAuMDQzLTEuMzc1IDAuMDctMi44NTUgMC4wOGgtMy4yNzZjLTAuNTUxIDAtMS0wLjQ0OC0xLTF2LTEwLjI0NWMwLTAuNTUyIDAuNDQ5LTEgMS0xaDMuOTYyYzAuOTQ1IDAgMS42MzQgMC4wMzkgMi4xMDYgMC4xMTkgMC40OTYgMC4wODQgMC45NDcgMC4yNjMgMS4zNCAwLjUzIDAuMzk4IDAuMjc1IDAuNzMgMC42MzYgMC45ODYgMS4wNzQgMC4yNjcgMC40NTQgMC40MDIgMC45NjcgMC40MDIgMS41MjMgMCAwLjYwNi0wLjE2NSAxLjE2OS0wLjQ5MSAxLjY3M2EzLjA2IDMuMDYgMCAwIDEtMC42OTIgMC43NThsLTAuMDIzIDAuMDE3IDAuMDE4IDAuMDFjMC40NTQgMC4yMjQgMC44MyAwLjUyOSAxLjEyIDAuOTA1IDAuNDIyIDAuNTUzIDAuNjM3IDEuMjA3IDAuNjM3IDEuOTQ4YTMuNzkgMy43OSAwIDAgMS0wLjQwMSAxLjY4NHptLTMuNDM3LTIuODk2Yy0wLjE5NS0wLjA2OS0wLjY5NC0wLjE1LTEuOTY4LTAuMTVoLTEuMjJhMC4zNCAwLjM0IDAgMCAwLTAuMzQgMC4zNHYxLjc1OWMwIDAuMTg4IDAuMTUzIDAuMzQgMC4zNCAwLjM0aDEuNDk3YzEuMDE4IDAgMS4zOTgtMC4wMzQgMS41MzctMC4wNjMgMC4yODQtMC4wNTMgMC41MDItMC4xNyAwLjY3Mi0wLjM2IDAuMTYzLTAuMTg0IDAuMjQzLTAuNDM1IDAuMjQzLTAuNzYzIDAtMC4yODMtMC4wNjMtMC41MS0wLjE5My0wLjY5OWExLjEwNyAxLjEwNyAwIDAgMC0wLjU2OC0wLjQwNHptLTMuMTg4LTIuNzM4aDAuODY1YzAuODk1IDAgMS40NTQtMC4wMTMgMS42NjEtMC4wMzcgMC4zMjItMC4wMzggMC41NzQtMC4xNDcgMC43NDktMC4zMiAwLjE2Ni0wLjE2NyAwLjI0Ny0wLjM4NyAwLjI0Ny0wLjY3MiAwLTAuMTM2LTAuMDE3LTAuMjYtMC4wNTItMC4zNjctMC4wNTEtMC4xNi0wLjI5LTAuNDIyLTAuNDQ3LTAuNDg4LTAuMTEtMC4wNDctMC4yNC0wLjA4LTAuMzktMC4wOTgtMC4yMTMtMC4wMjUtMC44NzMtMC4wMzctMS45NTgtMC4wMzdoLTAuNjc0YTAuMzQgMC4zNCAwIDAgMC0wLjM0IDAuMzR2MS4zMzljMCAwLjE4OCAwLjE1MiAwLjM0IDAuMzQgMC4zNHoiIGZpbGw9IiNlMTEiLz4KIDxjaXJjbGUgY3g9IjE2OC4xOCIgY3k9IjM0IiByPSIxMC41IiBmaWxsPSIjMzMzIiBzdHJva2U9IiNmZmYiLz4KIDxwYXRoIGQ9Im0xNzMuMTMgMjkuMzUzLTMuMjY5IDUuMTZjLTAuMTQ5IDAuMjM2LTAuMjggMC42ODctMC4yOCAwLjk2NXYzLjI0OWEwLjk1IDAuOTUgMCAwIDEtMC45NDggMC45NDhoLTAuOTE2YTAuOTUgMC45NSAwIDAgMS0wLjk0OS0wLjk0OHYtMy4yNjRjMC0wLjI3OS0wLjEzLTAuNzI5LTAuMjgtMC45NjRsLTMuMjU0LTUuMTQ2Yy0wLjE1Mi0wLjI0My0wLjE3Ni0wLjUtMC4wNjItMC43MDUgMC4xMTMtMC4yMDUgMC4zNDMtMC4zMjMgMC42MjktMC4zMjNoMS4yOTNjMC40NiAwIDAuOTgzIDAuMjk3IDEuMjE5IDAuNjkybDEuODgzIDMuMTY3YzAuMDEzIDAuMDIgMC4wMjMgMC4wMzUgMC4wMzMgMC4wNDUgNGUtMyAtMC4wMSAwLjAxMy0wLjAyNCAwLjAyNS0wLjA0NGwxLjg0NC0zLjE2M2MwLjIzMi0wLjM5OCAwLjc1NC0wLjY5NyAxLjIxNS0wLjY5N2gxLjI1MmMwLjI4NyAwIDAuNTE2IDAuMTE4IDAuNjI5IDAuMzI0IDAuMTE0IDAuMjA1IDAuMDkgMC40NjItMC4wNjQgMC43MDR6IiBmaWxsPSIjZmZjNDBkIi8+CiA8ZyBmaWxsPSIjMzMzIj4KICA8cGF0aCBkPSJtMzYuMzk3IDQ2LjY5YzAgMC42MDQgMC40OSAxLjA5NCAxLjA5MyAxLjA5NGgxMi4xOXYxMi40MzJoLTEyLjE5Yy0wLjYwMyAwLTEuMDkzIDAuNDktMS4wOTMgMS4wOTN2MTIuMTkxaC0xMi40MzR2LTEyLjE5YzAtMC42MDQtMC40OS0xLjA5NC0xLjA5My0xLjA5NGgtMTIuMTl2LTEyLjQzMmgxMi4xOWMwLjYwMyAwIDEuMDkzLTAuNDkgMS4wOTMtMS4wOTN2LTEyLjE5MWgxMi40MzR6IiBzdHJva2U9IiNmZmYiLz4KICA8cGF0aCBkPSJtMTA0LjY0IDguMjQ1Yy0zLjA3NSAwLjE4NC01LjA5OCAxLjQ5OC01LjU4OCAxLjg0OC0wLjQ3My0wLjM0My0yLjQyNS0xLjU5Ny01LjM4My0xLjgyNSAxLjY3OC0wLjc5MiAzLjUzMi0xLjI2OCA1LjUwOC0xLjI2OCAxLjk2IDAgMy43OTcgMC40NjYgNS40NjQgMS4yNDV6bS01LjU4NyA4LjdjNi43ODggNS4yNDIgOC44ODggOS42MjIgOS41MzUgMTEuOTczLTIuMzcxIDIuNTAzLTUuNzAyIDQuMDgyLTkuNDEyIDQuMDgyLTMuODEzIDAtNy4yMTQtMS42OC05LjU5NS00LjMwMyAwLjcxOC0yLjQwMiAyLjg5MS02LjY3MSA5LjQ3Mi0xMS43NTN6bTguMzYxLTYuOTJjMi44ODQgMi4zODggNC43NjIgNS45NDcgNC43NjMgOS45NzUgMCAyLjc5Ny0wLjkwOSA1LjM3Ni0yLjQxOCA3LjQ5OSAwLjMyNS02LjYzNy03LjA2Ny0xMy44MzgtNy4wNjctMTMuODM4IDAuMjY4LTEuNDc2IDIuOTc4LTIuODA3IDQuNzIyLTMuNjM2em0tMTYuNTY1IDAuMDc3YzEuNzQ0IDAuODMyIDQuMzA3IDIuMTM0IDQuNTY4IDMuNTY1IDAgMC03LjEzMyA2Ljk1Ni03LjA3MyAxMy40OTdhMTIuOTI2IDEyLjkyNiAwIDAgMS0yLjE2Ny03LjE2MWMwLTMuOTg3IDEuODM4LTcuNTE2IDQuNjcyLTkuOXoiLz4KICA8cGF0aCBkPSJtOTkuNzYxIDY1LjIzMmgtMS41MzY0djcuNjgyMmgxLjUzNjR2LTcuNjgyMm0zLjcxMDUgMS42NjctMS4wOTA5IDEuMDkwOWMxLjI1OTkgMS4wMTQgMS45ODk3IDIuNTQyOCAxLjk4OTcgNC4xNTYxYTUuMzc3NSA1LjM3NzUgMCAwIDEtNS4zNzc1IDUuMzc3NWMtMi45NjUzIDAtNS4zNzc1LTIuMzk2OC01LjM3NzUtNS4zNzc1IDAtMS42MDU2IDAuNzI5ODEtMy4xNDIgMS45ODItNC4xNjM3bC0xLjA4MzItMS4wODMyYy0yLjkxMTUgMi40NzM3LTMuMjY0OSA2LjgzNzEtMC43OTEyNiA5Ljc0ODcgMi40NzM3IDIuOTAzOSA2LjgzNzEgMy4yNTcyIDkuNzQ4NyAwLjc4MzU4IDEuNTUxOC0xLjMxMzYgMi40MzUyLTMuMjQ5NiAyLjQzNTItNS4yODUzIDAtMi4wMjA0LTAuODkxMTMtMy45NDEtMi40MzUyLTUuMjQ2OXoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9Ii43NjgyMiIgc3R5bGU9InBhaW50LW9yZGVyOnN0cm9rZSBmaWxsIG1hcmtlcnMiLz4KIDwvZz4KPC9zdmc+Cg==
+            elements:
+              - type: service-button
+                title: ''
+                service: remote.send_command
+                service_data:
+                  entity_id: remote.xboxone_remote
+                  command: Up
+                style:
+                  top: 45.35%
+                  left: 14.3%
+                  width: 6.2%
+                  height: 15%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: remote.send_command
+                service_data:
+                  entity_id: remote.xboxone_remote
+                  command: Down
+                style:
+                  top: 74.7%
+                  left: 14.3%
+                  width: 6.2%
+                  height: 15%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: remote.send_command
+                service_data:
+                  entity_id: remote.xboxone_remote
+                  command: Left
+                style:
+                  top: 60%
+                  left: 8.05%
+                  height: 14.4%
+                  width: 6.4%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: remote.send_command
+                service_data:
+                  entity_id: remote.xboxone_remote
+                  command: Right
+                style:
+                  top: 60%
+                  left: 20.65%
+                  height: 14.4%
+                  width: 6.4%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: remote.send_command
+                service_data:
+                  entity_id: remote.xboxone_remote
+                  command: A
+                style:
+                  top: 82.5%
+                  left: 80.05%
+                  width: 10.5%
+                  height: 24.4%
+                  border-radius: 100%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: remote.send_command
+                service_data:
+                  entity_id: remote.xboxone_remote
+                  command: X
+                style:
+                  top: 60.0%
+                  left: 70.6%
+                  width: 10.5%
+                  height: 24.4%
+                  border-radius: 100%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: remote.send_command
+                service_data:
+                  entity_id: remote.xboxone_remote
+                  command: B
+                style:
+                  top: 60.0%
+                  left: 89.5%
+                  width: 10.5%
+                  height: 24.4%
+                  border-radius: 100%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: remote.send_command
+                service_data:
+                  entity_id: remote.xboxone_remote
+                  command: 'Y'
+                style:
+                  top: 37.9%
+                  left: 80.05%
+                  width: 10.5%
+                  height: 24.4%
+                  border-radius: 100%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: remote.toggle
+                service_data:
+                  entity_id: remote.xboxone_remote
+                style:
+                  top: 80.2%
+                  left: 47.2%
+                  width: 7%
+                  height: 16%
+                  border-radius: 100%
+                  overflow: hidden
+              - type: service-button
+                title: ''
+                service: media_player.play_media
+                service_data:
+                  entity_id: media_player.xboxone
+                  media_content_type: ''
+                  media_content_id: Home
+                style:
+                  top: 22.2%
+                  left: 47.2%
+                  width: 13.4%
+                  height: 31.2%
+                  border-radius: 100%
+                  overflow: hidden
+      - type: vertical-stack
+        cards:
+          - type: media-control
+            entity: media_player.living_room_speaker
+          - type: media-control
+            entity: media_player.xboxone
+          - type: media-control
+            entity: media_player.spotify_tjafbe
+          - type: media-control
+            entity: media_player.chromecast
+  - theme: Backend-selected
+    title: Weather
+    path: ''
+    icon: mdi:cloud
+    type: sidebar
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:apexcharts-card
+            graph_span: 2d
+            span:
+              start: minute
+            header:
+              show: true
+              title: Temperature Forecast
+              show_states: false
+            now:
+              show: true
+              label: now
+            apex_config:
+              legend:
+                show: false
+            series:
+              - entity: weather.openweathermap
+                type: line
+                extend_to: now
+                unit: °C
+                show:
+                  in_header: false
+                data_generator: |
+                  return entity.attributes.forecast.map((entry) => {
+                     return [new Date(entry.datetime).getTime(), entry.temperature];
+                   });
+          - type: custom:apexcharts-card
+            graph_span: 2d
+            span:
+              start: minute
+            header:
+              show: true
+              title: Rain Forecast
+              show_states: false
+            now:
+              show: true
+              label: now
+            apex_config:
+              legend:
+                show: false
+            series:
+              - entity: weather.openweathermap
+                type: line
+                color: rgb(70, 126, 238)
+                extend_to: now
+                unit: mm
+                show:
+                  in_header: false
+                data_generator: |
+                  return entity.attributes.forecast.map((entry) => {
+                     return [new Date(entry.datetime).getTime(), entry.precipitation];
+                   });
+          - type: custom:neerslag-card
+            title: Neerslag
+            entities:
+              - sensor.neerslag_buienradar_regen_data
+        view_layout:
+          position: sidebar
+      - type: vertical-stack
+        cards:
+          - type: custom:weather-chart-card
+            entity: weather.openweathermap
+            icons: /local/weather-icons/
+  - theme: Backend-selected
+    title: Bedroom
+    path: bedroom
+    icon: mdi:bed-outline
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  data: {}
+                  target:
+                    entity_id: scene.bedroom_normal
+                entity: scene.bedroom_normal
+                name: 100%
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: script.bedroom_lights_normal
+                  data: {}
+                  target: {}
+                entity: script.bedroom_lights_normal
+                name: Auto
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  data: {}
+                  target:
+                    entity_id: scene.bedroom_evening
+                entity: scene.bedroom_evening
+                name: Avond
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  data: {}
+                  target:
+                    entity_id: scene.bedroom_color
+                entity: scene.bedroom_color
+                name: Color
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: toggle
+                entity: automation.bedroom_lights_wakeup
+                icon: mdi:sun-clock
+                name: Wakeup
+                show_state: false
+          - type: entities
+            entities:
+              - entity: input_datetime.bedroom_alarm
+              - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone
+                name: Deur sensor
+              - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_2
+                name: Bed sensor
+              - entity: sensor.lumi_lumi_sensor_motion_aq2_illuminance
+                name: Illuminance
+              - entity: sensor.lumi_lumi_sensor_motion_aq2_illuminance_2
+                name: Illuminance 2
+              - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy
+                name: Occupance 1
+              - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy_2
+                name: Occupancy 2
+              - entity: input_boolean.bedroom_colorloop
+            show_header_toggle: false
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.bedroom_light_1_light
+                name: Nick
+              - type: light
+                entity: light.bedroom_light_2_light
+                name: Annelies
+              - type: light
+                entity: light.bedroom_mood_lights
+                name: Ledstrip
+          - type: media-control
+            entity: media_player.googlehome0525
+      - shorten_cards: false
+        consolidate_entities: true
+        child_card: false
+        hide_header: false
+        header: ''
+        color_wheel: true
+        persist_features: true
+        brightness: true
+        color_temp: true
+        white_value: true
+        color_picker: true
+        smooth_color_wheel: true
+        speed: true
+        intensity: true
+        force_features: false
+        show_slider_percent: true
+        full_width_sliders: true
+        brightness_icon: weather-sunny
+        white_icon: file-word-box
+        temperature_icon: thermometer
+        speed_icon: speedometer
+        intensity_icon: transit-connection-horizontal
+        type: custom:light-entity-card
+        entity: light.bedroom_lights
+        effects_list: true
+      - shorten_cards: false
+        consolidate_entities: false
+        child_card: false
+        hide_header: false
+        header: ''
+        color_wheel: true
+        persist_features: true
+        brightness: true
+        color_temp: true
+        white_value: true
+        color_picker: true
+        smooth_color_wheel: true
+        speed: true
+        intensity: true
+        force_features: false
+        show_slider_percent: true
+        full_width_sliders: true
+        brightness_icon: weather-sunny
+        white_icon: file-word-box
+        temperature_icon: thermometer
+        speed_icon: speedometer
+        intensity_icon: transit-connection-horizontal
+        type: custom:light-entity-card
+        entity: light.bedroom_mood_lights
+  - title: Dishwasher
+    path: dishwasher
+    icon: mdi:dishwasher
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            elements:
+              - type: state-icon
+                entity: switch.dishwasher_power
+                style:
+                  left: 31%
+                  top: 16%
+                  '--paper-item-icon-color': rgb(64, 64, 65)
+                  '--paper-item-icon-active-color': rgb(242,53,105)
+                  transform: scale(1.8, 1.8)
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - type: image
+                entity: sensor.dishwasher_operation_state
+                image: /local/lg-icons/wash-plate.png
+                state_image:
+                  Run: /local/lg-icons/wash-plate-on.png
+                style:
+                  top: 29%
+                  left: 90%
+                  width: 16%
+                  image-rendering: crisp
+              - type: image
+                entity: binary_sensor.dishwasher_remote_control
+                image: /local/lg-icons/wifi.png
+                state_image:
+                  'on': /local/lg-icons/wifi-on.png
+                style:
+                  top: 27%
+                  left: 48%
+                  width: 9%
+                  image-rendering: crisp
+              - type: state-icon
+                entity: binary_sensor.dishwasher_door
+                style:
+                  left: 57%
+                  top: 16%
+                  '--paper-item-icon-color': rgb(64, 64, 65)
+                  '--paper-item-icon-active-color': rgb(242,53,105)
+                  transform: scale(1.8, 1.8)
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: more-info
+              - type: state-icon
+                entity: binary_sensor.dishwasher_remote_start
+                style:
+                  left: 71%
+                  top: 16%
+                  '--paper-item-icon-color': rgb(64, 64, 65)
+                  '--paper-item-icon-active-color': rgb(242,53,105)
+                  transform: scale(1.8, 1.8)
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: more-info
+              - type: state-label
+                entity: sensor.dishwasher_operation_state
+                style:
+                  color: '#8df427'
+                  font-size: 18px
+                  left: 36%
+                  top: 51%
+              - type: conditional
+                conditions:
+                  - entity: sensor.dishwasher_operation_state
+                    state_not: Inactive
+                elements:
+                  - type: state-label
+                    entity: sensor.dishwasher_remaining
+                    style:
+                      color: '#8df427'
+                      font-size: 35px
+                      left: 95%
+                      top: 74%
+                      transform: translate(-100%,-50%)
+                  - type: state-label
+                    entity: sensor.dishwasher_program_progress
+                    style:
+                      color: '#8df427'
+                      font-size: 25px
+                      left: 45%
+                      top: 74%
+                      transform: translate(-100%,-50%)
+              - type: conditional
+                conditions:
+                  - entity: sensor.dishwasher_operation_state
+                    state: Run
+                elements:
+                  - type: image
+                    image: >-
+                      https://i2.wp.com/metro.co.uk/wp-content/uploads/2015/01/20016.gif
+                    filter: brightness(120%) saturate(1.2)
+                    style:
+                      top: 60%
+                      left: 13.5%
+                      width: 14%
+            image: /local/hass-dishwasher-card-bg2.png
+          - type: entities
+            entities:
+              - entity: switch.dishwasher_program_eco50
+              - entity: switch.dishwasher_program_quick45
+              - entity: switch.dishwasher_program_quick65
+              - entity: switch.dishwasher_program_normal45
+              - entity: switch.dishwasher_program_normal65
+              - entity: switch.dishwasher_program_intensiv45
+              - entity: switch.dishwasher_program_intensiv70
+              - entity: switch.dishwasher_program_autohalfload
+              - entity: switch.dishwasher_program_maximumcleaning
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            elements:
+              - type: state-icon
+                entity: switch.dryer
+                style:
+                  left: 31%
+                  top: 16%
+                  '--paper-item-icon-color': rgb(64, 64, 65)
+                  '--paper-item-icon-active-color': rgb(242,53,105)
+                  transform: scale(1.8, 1.8)
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+              - type: state-icon
+                entity: scene.start_dryer
+                icon: mdi:play
+                style:
+                  left: 43%
+                  top: 16%
+                  '--paper-item-icon-color': rgb(242, 53, 105)
+                  '--paper-item-icon-active-color': rgb(242,53,105)
+                  transform: scale(2, 2)
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.start_dryer
+                hold_action:
+                  action: more-info
+              - type: state-icon
+                entity: scene.pause_dryer
+                icon: mdi:pause
+                style:
+                  left: 55%
+                  top: 16%
+                  '--paper-item-icon-color': rgb(242, 53, 105)
+                  '--paper-item-icon-active-color': rgb(242,53,105)
+                  transform: scale(2, 2)
+                tap_action:
+                  action: call-service
+                  service: scene.turn_on
+                  service_data:
+                    entity_id: scene.pause_dryer
+                hold_action:
+                  action: more-info
+              - type: image
+                entity: sensor.dryer_dryer_job_state
+                image: /local/lg-icons/dry-plate.png
+                state_image:
+                  drying: /local/lg-icons/dry-plate-on.png
+                style:
+                  top: 29%
+                  left: 73%
+                  width: 16%
+                  image-rendering: crisp
+              - type: image
+                entity: sensor.dryer_dryer_job_state
+                image: /local/lg-icons/cool.png
+                state_image:
+                  cooling: /local/lg-icons/cool-on.png
+                style:
+                  top: 29%
+                  left: 90%
+                  width: 16%
+                  image-rendering: crisp
+              - type: state-label
+                entity: sensor.dryer_dryer_machine_state
+                style:
+                  color: '#8df427'
+                  font-size: 18px
+                  left: 36%
+                  top: 51%
+              - type: conditional
+                conditions:
+                  - entity: sensor.dryer_dryer_machine_state
+                    state_not: stop
+                  - entity: sensor.dryer_dryer_job_state
+                    state_not: finished
+                elements:
+                  - type: state-label
+                    entity: sensor.dryer_remaining
+                    style:
+                      color: '#8df427'
+                      font-size: 35px
+                      left: 95%
+                      top: 74%
+                      transform: translate(-100%,-50%)
+                  - type: state-label
+                    entity: sensor.dryer_cycle_energy
+                    style:
+                      color: '#8df427'
+                      font-size: 25px
+                      left: 51%
+                      top: 74%
+                      transform: translate(-100%,-50%)
+            image: /local/hass-dryer-card-bg2.png
+          - type: entities
+            entities:
+              - entity: sensor.dryer_cycle_energy
+              - entity: sensor.dryer_energy
+  - title: Car
+    path: car
+    icon: mdi:car
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            image: /local/skoda.png
+            elements:
+              - type: image
+                entity: binary_sensor.superb_charging_cable_connected
+                tap_action:
+                  action: none
+                style:
+                  top: 50%
+                  left: 50%
+                  width: 100%
+                image: /local/blank.png
+                state_image:
+                  'on': /local/skoda_charger_connected.png
+              - type: image
+                entity: binary_sensor.superb_energy_flow
+                tap_action:
+                  action: none
+                style:
+                  top: 50%
+                  left: 50%
+                  width: 100%
+                image: /local/blank.png
+                state_image:
+                  'on': /local/skoda_charger_charging.png
+              - type: state-icon
+                entity: sensor.superb_combined_range
+                style:
+                  top: 4%
+                  left: 4%
+              - type: state-label
+                entity: sensor.superb_combined_range
+                style:
+                  top: 4%
+                  left: 15%
+              - type: state-icon
+                entity: sensor.superb_electric_range
+                style:
+                  top: 14%
+                  left: 4%
+              - type: state-label
+                entity: sensor.superb_electric_range
+                style:
+                  top: 14%
+                  left: 15%
+              - type: state-icon
+                entity: sensor.superb_battery_level
+                style:
+                  top: 24%
+                  left: 4%
+              - type: state-label
+                entity: sensor.superb_battery_level
+                style:
+                  top: 24%
+                  left: 13%
+              - type: state-icon
+                entity: sensor.superb_fuel_level
+                style:
+                  top: 34%
+                  left: 4%
+              - type: state-label
+                entity: sensor.superb_fuel_level
+                style:
+                  top: 34%
+                  left: 13%
+              - type: state-icon
+                entity: lock.superb_door_locked
+                style:
+                  bottom: 0%
+                  right: 0%
+              - type: state-icon
+                entity: binary_sensor.superb_trunk_closed
+                style:
+                  bottom: 0%
+                  right: 5%
+              - type: state-icon
+                entity: binary_sensor.superb_windows_closed
+                style:
+                  bottom: 0%
+                  right: 10%
+              - type: state-icon
+                entity: binary_sensor.superb_sunroof_closed
+                style:
+                  bottom: 0%
+                  right: 15%
+          - type: horizontal-stack
+            cards:
+              - type: button
+                tap_action:
+                  action: more-info
+                entity: switch.superb_charging
+                name: Charge
+                show_state: true
+                hold_action:
+                  action: toggle
+                icon_height: 48px
+              - type: button
+                tap_action:
+                  action: more-info
+                entity: switch.superb_electric_climatisation
+                name: Electric heater
+                show_state: true
+                hold_action:
+                  action: toggle
+                icon_height: 48px
+              - type: button
+                entity: switch.superb_window_heater
+                name: Defrost
+                show_state: true
+                tap_action:
+                  action: more-info
+                hold_action:
+                  action: toggle
+                icon_height: 48px
+              - type: button
+                entity: switch.superb_force_data_refresh
+                name: Force refresh
+                show_state: true
+                tap_action:
+                  action: toggle
+                icon_height: 48px
+              - type: button
+                tap_action:
+                  action: toggle
+                entity: input_boolean.car_force_charging
+                name: Force charge
+                show_state: true
+          - type: map
+            entities:
+              - device_tracker.superb
+              - device_tracker.sup_com_ivl_k_ts115_1_4a6f_position
+            aspect_ratio: '16:9'
+      - type: entities
+        entities:
+          - entity: binary_sensor.superb_charging_cable_connected
+            type: custom:multiple-entity-row
+            name: Charger
+            secondary_info: last-changed
+            state_header: Connector
+            entities:
+              - entity: binary_sensor.superb_external_power
+                name: Power
+              - entity: binary_sensor.superb_energy_flow
+                name: Flow
+              - entity: binary_sensor.superb_charging_cable_locked
+                name: Plug
+          - entity: sensor.superb_battery_level
+            type: custom:multiple-entity-row
+            name: Battery
+            secondary_info: last-changed
+            state_header: Level
+            entities:
+              - entity: sensor.superb_charger_max_ampere
+                name: Amps
+                unit: ' '
+              - entity: sensor.superb_charging_time_left
+                name: To full
+          - entity: automation.car_start_charging_fixed_time
+            name: Charging start fixed time
+          - entity: input_datetime.start_time_car_charging
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - entity: switch.superb_climatisation_from_battery
+            type: custom:multiple-entity-row
+            name: Climatisation settings
+            state_header: From battery
+            toggle: true
+            secondary_info: last-updated
+            entities:
+              - entity: sensor.superb_outside_temperature
+                name: Outside
+              - entity: sensor.superb_climatisation_target_temperature
+                name: Target
+          - entity: binary_sensor.superb_vehicle_moving
+            type: custom:multiple-entity-row
+            name: Vehicle Parked
+            state_header: Moving
+            secondary_info:
+              entity: sensor.superb_parking_time
+              name: 'Parked:'
+            entities:
+              - entity: device_tracker.sup_com_ivl_k_ts115_1_4a6f_position
+                name: Location
+          - entity: sensor.superb_requests_remaining
+            type: custom:multiple-entity-row
+            name: Requests
+            state_header: Remaining
+            secondary_info: last-updated
+            entities:
+              - entity: sensor.superb_request_result
+                name: Last result
+          - entity: sensor.superb_last_trip_average_electric_consumption
+            type: custom:multiple-entity-row
+            name: Last Trip
+            unit: kWh
+            icon: mdi:map-marker-distance
+            state_header: Electric
+            entities:
+              - entity: sensor.superb_last_trip_average_speed
+                name: Speed
+              - entity: sensor.superb_last_trip_duration
+                name: Time
+              - entity: sensor.superb_last_trip_length
+                name: Length
+              - entity: sensor.superb_last_trip_average_fuel_consumption
+                name: Fuel
+                unit: l
+        show_header_toggle: false
+        state_color: true
+  - title: Shades
+    path: shades
+    icon: mdi:blinds
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - type: section
+            label: Beneden
+          - entity: cover.curtain_kitchen_local
+            name: Keuken
+          - entity: cover.gordijn_deur1_window_covering
+            name: Gordijn deur 1
+          - entity: cover.gordijn_deur2_window_covering
+            name: Gordijn deur 2
+          - entity: cover.gordijn_raam_1_window_covering
+            name: Gordijn raam 1
+          - entity: cover.gordijn_raam2_window_covering
+            name: Gordijn raam 2
+          - type: section
+            label: Slaapkamers
+          - entity: cover.gordijn_jana_local
+            name: Gordijn Jana
+          - entity: cover.gordijn_jana_2_cover
+          - type: divider
+          - entity: cover.gordijn_wout_local
+            name: Gordijn Wout
+          - entity: cover.gordijn_wout_2_cover
+      - square: true
+        columns: 5
+        type: grid
+        cards:
+          - type: button
+            entity: script.blinds_up
+            name: Open
+            tap_action:
+              action: call-service
+              service: script.blinds_up
+              service_data:
+                entity_id: script.blinds_up
+            show_name: true
+          - type: button
+            entity: script.blinds_down
+            name: Closed
+            tap_action:
+              action: call-service
+              service: script.blinds_down
+              service_data:
+                entity_id: script.blinds_down
+            show_name: true
+          - type: button
+            entity: script.blinds_xbox
+            name: Half
+            tap_action:
+              action: call-service
+              service: script.blinds_xbox
+              service_data:
+                entity_id: script.blinds_xbox
+            show_name: true
+          - type: button
+            entity: script.blinds_zon
+            name: Zonnewering
+            tap_action:
+              action: call-service
+              service: script.blinds_zon
+              service_data:
+                entity_id: script.blinds_zon
+            show_name: true
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: script.blinds_down_2
+              data: {}
+              target: {}
+            entity: script.blinds_down_2
+            name: Ochtend
+  - title: Kamers
+    path: kamers
+    icon: mdi:thermometer
+    type: panel
+    badges: []
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: picture-elements
+            elements:
+              - type: state-icon
+                entity: light.light_hallway_down_level_on_off
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 70%
+                  left: 45%
+              - type: state-icon
+                entity: switch.light_dinner_table_switch_1
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 25%
+                  left: 30%
+              - type: state-icon
+                entity: light.light_living_room_light
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 25%
+                  left: 70%
+              - type: state-icon
+                entity: switch.smart_plug_tv_socket_1
+                tap_action:
+                  action: toggle
+                style:
+                  top: 15%
+                  left: 90%
+              - type: state-badge
+                entity: sensor.lumi_lumi_weather_temperature
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 45%
+                  left: 80%
+              - type: state-badge
+                entity: sensor.lumi_lumi_weather_humidity
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 57%
+                  left: 80%
+              - type: state-badge
+                entity: sensor.lumi_lumi_weather_pressure
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 70%
+                  left: 80%
+              - type: state-icon
+                entity: switch.smart_plug_kelder_socket_1
+                tap_action:
+                  action: toggle
+                style:
+                  top: 80%
+                  left: 75%
+              - type: state-icon
+                entity: light.light_kelder_cloud
+                tap_action:
+                  action: toggle
+                style:
+                  top: 85%
+                  left: 85%
+              - type: custom:hui-thermostat-card
+                entity: climate.thermostaat_wout_thermostat
+                name: Wout
+                style:
+                  left: 35%
+                  top: 105%
+                  transform: scale(1,1)
+            image: /local/Living.png
+          - type: picture-elements
+            elements:
+              - type: state-icon
+                entity: light.light_gang
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 70%
+                  left: 45%
+              - type: state-icon
+                entity: light.bedroom_light_1_light
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 20%
+                  left: 50%
+              - type: state-icon
+                entity: light.bedroom_light_2_light
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 20%
+                  left: 80%
+              - type: state-icon
+                entity: light.bedroom_mood_lights
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 10%
+                  left: 60%
+              - type: state-badge
+                entity: sensor.ble_temperature_room_sensor_bedroom
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 15%
+                  left: 70%
+              - type: state-badge
+                entity: sensor.ble_humidity_room_sensor_bedroom
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 30%
+                  left: 70%
+              - type: state-badge
+                entity: sensor.ble_temperature_room_sensor_office
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 70%
+                  left: 80%
+              - type: state-badge
+                entity: sensor.ble_humidity_room_sensor_bedroom
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 85%
+                  left: 80%
+              - type: custom:hui-thermostat-card
+                entity: climate.thermostaat_jana_thermostat
+                name: Jana
+                style:
+                  left: 35%
+                  top: 105%
+                  transform: scale(1,1)
+            image: /local/Gelijkvloers.png
+          - type: picture-elements
+            elements:
+              - type: state-icon
+                entity: switch.light_hallway_up_switch_1
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 70%
+                  left: 45%
+              - type: state-icon
+                entity: switch.smart_plug_playroom_socket_1
+                tap_action:
+                  action: toggle
+                style:
+                  top: 5%
+                  left: 35%
+              - type: state-badge
+                entity: sensor.ble_temperature_room_sensor_playroom
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 20%
+                  left: 20%
+              - type: state-badge
+                entity: sensor.ble_humidity_room_sensor_playroom
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 45%
+                  left: 20%
+              - type: state-icon
+                entity: light.playroom
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 25%
+                  left: 28%
+              - type: state-badge
+                entity: sensor.ble_temperature_room_sensor_jana
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 20%
+                  left: 70%
+              - type: state-badge
+                entity: sensor.ble_humidity_room_sensor_jana
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 45%
+                  left: 70%
+              - type: state-icon
+                entity: light.light_jana
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 25%
+                  left: 70%
+              - type: state-badge
+                entity: sensor.ble_temperature_room_sensor_bathroom
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 70%
+                  left: 80%
+              - type: state-badge
+                entity: sensor.ble_humidity_room_sensor_bathroom
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 100%
+                  left: 80%
+              - type: state-icon
+                entity: switch.light_bathroom_switch_1
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 78%
+                  left: 80%
+              - type: state-badge
+                entity: sensor.ble_temperature_room_sensor_wout
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 70%
+                  left: 20%
+              - type: state-badge
+                entity: sensor.ble_humidity_room_sensor_wout
+                style:
+                  color: rgba(0,0,0,0)
+                  top: 100%
+                  left: 20%
+              - type: state-icon
+                entity: light.wout_on_off
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+                style:
+                  top: 74%
+                  left: 23%
+              - type: custom:hui-thermostat-card
+                entity: climate.bathroom2_thermostat
+                name: Handoek
+                style:
+                  left: 60%
+                  top: 105%
+                  transform: scale(1,1)
+              - type: custom:hui-thermostat-card
+                entity: climate.thermostaat_bathroom_thermostat
+                name: Badkamer
+                style:
+                  left: 15%
+                  top: 105%
+                  transform: scale(1,1)
+            image: /local/Slaap.png
+  - title: Batteries
+    path: batteries
+    icon: mdi:battery
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - type: custom:battery-entity-row
+            entity: sensor.sm_g980f_battery_level
+            attribute: battery_percent
+            name: GSM Nick
+            secondary_info: last-changed
+            warning: 50
+            critical: 25
+            charging:
+              entity: binary_sensor.sm_g980f_is_charging
+              state:
+                - Enabled
+                - is_charging
+          - type: custom:battery-entity-row
+            entity: sensor.sm_a530f_battery_level
+            attribute: battery_percent
+            name: GSM Annelies
+            secondary_info: last-changed
+            warning: 50
+            critical: 25
+            charging:
+              entity: binary_sensor.sm_a530f_is_charging
+              state:
+                - Enabled
+                - is_charging
+          - type: custom:battery-entity-row
+            entity: sensor.sm_g950f_battery_level
+            attribute: battery_percent
+            name: GSM Wout
+            secondary_info: last-changed
+            warning: 50
+            critical: 25
+            charging:
+              entity: binary_sensor.sm_g950f_is_charging
+              state:
+                - Enabled
+                - is_charging
+          - type: custom:battery-entity-row
+            entity: sensor.sm_t500_battery_level
+            attribute: battery_percent
+            name: Tablet
+            secondary_info: last-changed
+            warning: 50
+            critical: 25
+            charging:
+              entity: binary_sensor.sm_t500_is_charging
+              state:
+                - Enabled
+                - is_charging
+          - type: custom:battery-entity-row
+            entity: sensor.superb_battery_level
+            attribute: battery_percent
+            name: SKoda Superb iV
+            secondary_info: last-changed
+            warning: 50
+            critical: 25
+            charging:
+              entity: switch.superb_charging
+              state:
+                - Enabled
+                - is_charging
+          - type: custom:battery-entity-row
+            entity: sensor.battery_state_of_charge
+            name: Thuisbatterij
+            secondary_info: last-changed
+            warning: 50
+            critical: 25
+          - entity: sensor.regenwaterput_percent
+        title: Rechargeable batteries
+      - type: entities
+        entities:
+          - type: custom:battery-entity-row
+            entity: sensor.ble_battery_room_sensor_bedroom
+          - type: custom:battery-entity-row
+            entity: sensor.ble_battery_room_sensor_playroom
+          - type: custom:battery-entity-row
+            entity: sensor.ble_battery_room_sensor_office
+          - type: custom:battery-entity-row
+            entity: sensor.ble_battery_room_sensor_jana
+          - type: custom:battery-entity-row
+            entity: sensor.ble_battery_room_sensor_wout
+          - type: custom:battery-entity-row
+            entity: sensor.ble_battery_room_sensor_bathroom
+          - type: custom:battery-entity-row
+            entity: sensor.lumi_lumi_weather_power
+          - type: custom:battery-entity-row
+            name: Motion sensor beneden
+            entity: sensor.motion_sensor_hallway_down_power
+          - type: custom:battery-entity-row
+            name: Motion sensor gang
+            entity: sensor.motion_sensor_hallway_power
+          - type: custom:battery-entity-row
+            name: Motion sensor boven
+            entity: sensor.motion_sensor_hallway_up_power
+          - type: custom:battery-entity-row
+            name: Deur sensor badkamer
+            entity: sensor.door_bathroom_power
+          - type: custom:battery-entity-row
+            name: Deur sensor Wout
+            entity: sensor.door_wout_power
+          - type: custom:battery-entity-row
+            name: Deur sensor Jana
+            entity: sensor.door_jana_power
+          - type: custom:battery-entity-row
+            name: Deur sensor Kelder
+            entity: sensor.door_sensor_kelder_battery
+          - type: custom:battery-entity-row
+            entity: sensor.gordijn_remote_wout_battery
+          - type: custom:battery-entity-row
+            entity: sensor.gordijn_remote_jana_battery
+        title: Sensor batteries
+      - type: entities
+        entities:
+          - type: custom:battery-entity-row
+            entity: sensor.gordijn_deur1_power
+          - type: custom:battery-entity-row
+            entity: sensor.gordijn_deur2_power
+          - type: custom:battery-entity-row
+            entity: sensor.gordijn_raam_1_power
+          - type: custom:battery-entity-row
+            entity: sensor.gordijn_raam2_power
+          - type: custom:battery-entity-row
+            entity: sensor.gordijn_wout_2_battery
+          - type: custom:battery-entity-row
+            entity: sensor.gordijn_jana_2_battery
+          - type: custom:battery-entity-row
+            name: Media remote
+            entity: sensor.remote_media_power
+          - type: custom:battery-entity-row
+            entity: sensor.ke_tradfri_open_close_remote_2c197bfe_power
+          - type: custom:battery-entity-row
+            entity: sensor.thermostaat_bathroom_power
+          - type: custom:battery-entity-row
+            entity: sensor.thermostaat_bathroom_2_power
+          - type: custom:battery-entity-row
+            entity: sensor.thermostaat_wout_power
+          - type: custom:battery-entity-row
+            entity: sensor.thermostaat_jana_power
+          - type: custom:battery-entity-row
+            entity: sensor.kitchen_media_remote_power
+          - type: custom:battery-entity-row
+            entity: sensor.bedroom_remote_battery
+          - type: custom:battery-entity-row
+            entity: sensor.bedroom_remote_2_battery
+          - type: custom:battery-entity-row
+            entity: sensor.lumi_lumi_sensor_motion_aq2_battery
+          - type: custom:battery-entity-row
+            entity: sensor.lumi_lumi_sensor_motion_aq2_battery_2
+        title: Sensor batteries
+      - type: entities
+        entities:
+          - entity: sensor.power_consumed
+            icon: mdi:home
+          - entity: sensor.ctclamp_measured_power
+          - entity: sensor.smart_plug_kelder_power_2
+          - entity: sensor.smart_plug_playroom_power_2
+          - entity: sensor.smart_plug_tv_power_2
+        title: Verbruik
+      - show_name: true
+        show_icon: false
+        show_state: true
+        type: glance
+        entities:
+          - entity: sensor.smart_plug_tv_power_2
+            name: TV
+          - entity: sensor.smart_plug_kelder_power_2
+            name: Kelder
+          - entity: sensor.smart_plug_playroom_power_2
+            name: Lichtjes
+          - entity: sensor.light_wout_power
+            name: Wout
+          - entity: sensor.light_jana_power
+            name: Jana
+          - entity: sensor.light_playroom_power
+            name: Speelkamer
+        state_color: false
+        columns: 3
+  - title: Map
+    path: map
+    icon: mdi:map
+    type: sidebar
+    badges: []
+    cards:
+      - type: map
+        entities:
+          - entity: person.nick
+          - entity: person.annelies
+          - entity: person.superb
+        geo_location_sources:
+          - all
+        dark_mode: false
+        aspect_ratio: '16:9'
+        hours_to_show: 24
+      - type: entities
+        entities:
+          - entity: person.nick
+            secondary_info: last-updated
+          - entity: person.annelies
+            secondary_info: last-updated
+          - entity: person.wout
+            secondary_info: last-updated
+          - entity: person.superb
+            secondary_info: last-updated
+        view_layout:
+          position: sidebar
+

@@ -1,0 +1,944 @@
+views:
+  - title: Overview
+    path: inverter
+    icon: mdi:solar-power
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: energy-distribution
+            link_dashboard: true
+          - type: grid
+            cards:
+              - type: entity
+                entity: sensor.solcast_forecast_today
+                name: Resterend
+                icon: mdi:solar-power
+              - type: entity
+                entity: sensor.solcast_forecast_tommorrow
+                name: Morgen
+                icon: mdi:solar-power
+              - type: entity
+                entity: sensor.solcast_forecast_day_after_tommorrow
+                name: Overmorgen
+                icon: mdi:solar-power
+              - type: entity
+                entity: input_number.max_peak
+                name: Maandpiek
+              - type: entity
+                entity: sensor.inverter_temperature_air
+              - type: entity
+                entity: sensor.inverter_temperature_radiator
+            columns: 3
+          - type: entities
+            entities:
+              - entity: sensor.total_savings
+                name: Total savings
+              - entity: sensor.total_load
+              - entity: sensor.total_pv_generation
+              - entity: sensor.meter_total_energy_import
+              - entity: sensor.meter_total_energy_export
+              - entity: sensor.total_battery_charge
+              - entity: sensor.total_battery_discharge
+              - entity: sensor.pv1_power
+              - entity: sensor.pv2_power
+              - entity: sensor.today_s_pv_generation
+              - entity: sensor.today_battery_charge
+              - entity: sensor.today_battery_discharge
+            title: GoodWe
+      - type: vertical-stack
+        cards:
+          - type: custom:tesla-style-solar-power-card
+            show_w_not_kw: 1
+            generation_to_battery_entity: sensor.pv_battery_charge
+            generation_to_house_entity: sensor.pv_to_house
+            generation_to_grid_entity: sensor.grid_sell
+            grid_to_house_entity: sensor.grid_buy
+            battery_to_house_entity: sensor.pv_battery_use
+            battery_extra_entity: sensor.battery_state_of_charge
+            generation_extra_entity: sensor.inverter_temperature_radiator
+            grid_entity: sensor.active_power
+            grid_extra_entity: sensor.grid_production_consumption
+            house_entity: sensor.house_consumption
+            house_extra_entity: sensor.voltage_phase_1
+            generation_entity: sensor.pv_power
+            battery_entity: sensor.battery_state_of_charge
+            card_mod:
+              style: |
+                ha-card {
+                  background-color: 
+                  {% if (states("sensor.grid_production_consumption") | float(0) > 4.000) -%}
+                  rgb(160,20,0,0.4);
+                  {%- elif (states("sensor.grid_production_consumption") | float(0) > 3.000) -%}
+                  rgb(120,70,0,0.4);
+                  {%- elif (states("sensor.grid_production_consumption") | float(0) > 2.000) -%}
+                  rgb(120,120,0,0.4);
+                  {%- elif (states("sensor.grid_production_consumption") | float(0) > 0.250) -%}
+                  rgb(5,5,5,0.4);
+                  {%- else -%}
+                  rgb(0,120,0,0.4);
+                  {%- endif %}
+                }
+          - type: grid
+            cards:
+              - type: custom:apexcharts-card
+                header:
+                  show: true
+                  title: Consumption of load
+                  show_states: true
+                  colorize_states: true
+                chart_type: donut
+                series:
+                  - entity: sensor.pv_total_solar_use
+                    name: Solar use
+                    float_precision: 0
+                  - entity: sensor.meter_total_energy_import
+                    name: Grid buy
+                    float_precision: 0
+                apex_config:
+                  dataLabels:
+                    formatter: |
+                      EVAL:function(value) {
+                        return value.toFixed(1) + "%";
+                      }
+                  legend:
+                    show: false
+              - type: custom:apexcharts-card
+                header:
+                  show: true
+                  title: Solar production
+                  show_states: true
+                  colorize_states: true
+                chart_type: donut
+                apex_config:
+                  legend:
+                    show: false
+                  dataLabels:
+                    formatter: |
+                      EVAL:function(value) {
+                        return value.toFixed(1) + "%";
+                      }
+                series:
+                  - entity: sensor.pv_total_solar_use
+                    name: Solar use
+                    float_precision: 0
+                  - entity: sensor.meter_total_energy_export
+                    name: Grid sell
+                    float_precision: 0
+            columns: 2
+          - type: entities
+            entities:
+              - entity: sensor.voltage_phase_1
+              - entity: sensor.on_grid_l1_voltage
+              - entity: sensor.daily_consumed1
+              - entity: sensor.daily_consumed2
+              - entity: sensor.daily_produced1
+              - entity: sensor.daily_produced2
+              - entity: sensor.energy_consumed_tariff_1
+              - entity: sensor.energy_consumed_tariff_2
+              - entity: sensor.energy_produced_tariff_1
+              - entity: sensor.energy_produced_tariff_2
+              - entity: sensor.energy_battery_charge
+              - entity: sensor.energy_battery_discharge
+              - entity: sensor.gas_consumed_belgium
+            title: Digitale meter
+      - type: vertical-stack
+        cards:
+          - type: history-graph
+            entities:
+              - entity: sensor.battery_state_of_charge
+                name: Battery SoC
+            hours_to_show: 60
+            refresh_interval: 0
+            title: Thuisbatterij
+          - type: custom:apexcharts-card
+            graph_span: 19h
+            span:
+              start: day
+              offset: +4h
+            header:
+              show: true
+              title: Solar Production vs. forecast
+              show_states: true
+            now:
+              show: true
+            apex_config:
+              legend:
+                show: false
+            series:
+              - entity: sensor.pv_power
+                name: Actual
+                unit: W
+                fill_raw: last
+                extend_to: now
+                group_by:
+                  func: avg
+                  duration: 10min
+              - entity: sensor.solcast_forecast_average_30min
+                name: Forecast
+                unit: W
+                fill_raw: zero
+                extend_to: now
+              - entity: sensor.solcast_forecast_data
+                type: line
+                extend_to: end
+                unit: W
+                show:
+                  in_header: false
+                data_generator: |
+                  return entity.attributes.forecasts.map((entry) => {
+                     return [new Date(entry.period_end), entry.pv_estimate*1000];
+                   });
+          - type: entities
+            entities:
+              - entity: number.depth_of_discharge_on_grid
+              - entity: number.grid_export_limit
+              - entity: select.inverter_operation_mode
+              - type: section
+                label: Diagnostics
+              - entity: sensor.battery_temperature
+              - entity: sensor.battery_charge_limit
+              - entity: sensor.battery_discharge_limit
+              - entity: sensor.battery_current
+              - entity: sensor.battery_voltage
+              - entity: sensor.battery_state_of_health
+              - entity: sensor.battery_power
+            title: Goodwe battery
+  - title: Factuur
+    path: factuur
+    icon: mdi:currency-eur
+    badges: []
+    cards:
+      - type: entities
+        title: Vandaag
+        entities:
+          - entity: sensor.energy_daily_buy_total
+            icon: mdi:factory
+            type: custom:multiple-entity-row
+            name: Buy
+            state_header: Total
+            entities:
+              - entity: sensor.energy_daily_buy_offpeak
+                name: Nacht
+              - entity: sensor.energy_daily_buy_peak
+                name: Dag
+          - entity: sensor.energy_daily_sell_total
+            icon: mdi:transmission-tower
+            type: custom:multiple-entity-row
+            name: Sell
+            state_header: Total
+            entities:
+              - entity: sensor.energy_daily_sell_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_daily_sell_peak
+                name: Dag
+          - entity: sensor.energy_daily_load_total
+            icon: mdi:home
+            type: custom:multiple-entity-row
+            name: Home
+            state_header: Total
+            entities:
+              - entity: sensor.energy_daily_load_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_daily_load_peak
+                name: Dag
+          - entity: sensor.energy_daily_production_total
+            icon: mdi:solar-power
+            type: custom:multiple-entity-row
+            name: Solar
+            state_header: Total
+            entities:
+              - entity: sensor.energy_daily_production_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_daily_production_peak
+                name: Dag
+          - entity: sensor.energy_daily_cost
+            icon: mdi:currency-eur
+            type: custom:multiple-entity-row
+            name: Cost
+            state_header: Total
+            entities:
+              - entity: sensor.energy_daily_offpeak_cost
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_daily_peak_cost
+                name: Dag
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        title: Maand
+        entities:
+          - entity: sensor.energy_monthly_buy_total
+            icon: mdi:factory
+            type: custom:multiple-entity-row
+            name: Buy
+            state_header: Total
+            entities:
+              - entity: sensor.energy_monthly_buy_offpeak
+                name: Nacht
+              - entity: sensor.energy_monthly_buy_peak
+                name: Dag
+          - entity: sensor.energy_monthly_sell_total
+            icon: mdi:transmission-tower
+            type: custom:multiple-entity-row
+            name: Sell
+            state_header: Total
+            entities:
+              - entity: sensor.energy_monthly_sell_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_monthly_sell_peak
+                name: Dag
+          - entity: sensor.energy_monthly_load_total
+            icon: mdi:home
+            type: custom:multiple-entity-row
+            name: Home
+            state_header: Total
+            entities:
+              - entity: sensor.energy_monthly_load_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_monthly_load_peak
+                name: Dag
+          - entity: sensor.energy_monthly_production_total
+            icon: mdi:solar-power
+            type: custom:multiple-entity-row
+            name: Solar
+            state_header: Total
+            entities:
+              - entity: sensor.energy_monthly_production_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_monthly_production_peak
+                name: Dag
+          - entity: sensor.energy_monthly_cost
+            icon: mdi:currency-eur
+            type: custom:multiple-entity-row
+            name: Cost
+            state_header: Total
+            entities:
+              - entity: sensor.energy_monthly_offpeak_cost
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_monthly_peak_cost
+                name: Dag
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        title: Jaar
+        entities:
+          - entity: sensor.energy_yearly_buy_total
+            icon: mdi:factory
+            type: custom:multiple-entity-row
+            name: Buy
+            state_header: Total
+            entities:
+              - entity: sensor.energy_yearly_buy_offpeak
+                name: Nacht
+              - entity: sensor.energy_yearly_buy_peak
+                name: Dag
+          - entity: sensor.energy_yearly_sell_total
+            icon: mdi:transmission-tower
+            type: custom:multiple-entity-row
+            name: Sell
+            state_header: Total
+            entities:
+              - entity: sensor.energy_yearly_sell_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_yearly_sell_peak
+                name: Dag
+          - entity: sensor.energy_yearly_load_total
+            icon: mdi:home
+            type: custom:multiple-entity-row
+            name: Home
+            state_header: Total
+            entities:
+              - entity: sensor.energy_yearly_load_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_yearly_load_peak
+                name: Dag
+          - entity: sensor.energy_yearly_production_total
+            icon: mdi:solar-power
+            type: custom:multiple-entity-row
+            name: Solar
+            state_header: Total
+            entities:
+              - entity: sensor.energy_yearly_production_offpeak
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_yearly_production_peak
+                name: Dag
+          - entity: sensor.energy_yearly_cost
+            icon: mdi:currency-eur
+            type: custom:multiple-entity-row
+            name: Cost
+            state_header: Total
+            entities:
+              - entity: sensor.energy_yearly_offpeak_cost
+                name: Nacht
+                show_name: false
+              - entity: sensor.energy_yearly_peak_cost
+                name: Dag
+        show_header_toggle: false
+        state_color: true
+      - type: glance
+        entities:
+          - entity: sensor.energy_daily_cost
+            name: Vandaag
+          - entity: sensor.energy_monthly_cost
+            name: Maand
+          - entity: sensor.energy_yearly_cost
+            name: Jaar
+        title: Actual costs
+        show_state: true
+        show_icon: false
+        show_name: true
+      - type: glance
+        entities:
+          - entity: sensor.energy_daily_savings
+            name: Vandaag
+          - entity: sensor.energy_monthly_savings
+            name: Maand
+          - entity: sensor.energy_yearly_savings
+            name: Jaar
+          - entity: sensor.total_savings
+            name: Total
+        title: Savings
+        show_state: true
+        show_icon: false
+        show_name: true
+      - type: entities
+        entities:
+          - entity: utility_meter.energy_daily_buy
+          - entity: utility_meter.energy_daily_production
+          - entity: utility_meter.energy_daily_sell
+          - entity: utility_meter.energy_monthly_buy
+          - entity: utility_meter.energy_monthly_production
+          - entity: utility_meter.energy_monthly_sell
+          - entity: utility_meter.energy_yearly_buy
+          - entity: utility_meter.energy_yearly_production
+          - entity: utility_meter.energy_yearly_sell
+      - type: entities
+        title: Prijzen
+        entities:
+          - type: custom:hui-glance-card
+            entities:
+              - entity: input_number.peak_tariff
+              - entity: input_number.offpeak_tariff
+          - type: divider
+          - type: custom:hui-glance-card
+            entities:
+              - entity: input_number.peak_inj_tariff
+              - entity: input_number.offpeak_inj_tariff
+      - type: entities
+        title: Prijzen (variabel)
+        entities:
+          - type: custom:hui-glance-card
+            entities:
+              - entity: sensor.electricity_price_month
+                icon: none
+                name: Current month
+              - entity: sensor.gasprijs
+          - type: custom:hui-glance-card
+            entities:
+              - entity: sensor.electriciteitprijs_dag_afname
+                name: Afname dag
+              - entity: sensor.electriciteitprijs_nacht_afname
+                name: Afname nacht
+          - type: divider
+          - type: custom:hui-glance-card
+            entities:
+              - entity: sensor.electriciteitprijs_dag_injectie
+                name: Injectie dag
+              - entity: sensor.electriciteitprijs_nacht_injectie
+                name: Injectie nacht
+  - title: Forecast
+    path: forecast
+    type: sidebar
+    badges: []
+    cards:
+      - type: custom:apexcharts-card
+        graph_span: 4d
+        span:
+          offset: +2d
+        header:
+          show: true
+          title: Solar Production vs. forecast
+          show_states: true
+        now:
+          show: true
+          label: now
+        apex_config:
+          legend:
+            show: false
+        series:
+          - entity: sensor.pv_power
+            name: Actual
+            unit: W
+            fill_raw: last
+            extend_to: now
+            group_by:
+              func: avg
+              duration: 30min
+          - entity: sensor.solcast_forecast_average_60min
+            name: Forecast
+            unit: W
+            fill_raw: last
+            extend_to: now
+          - entity: sensor.solcast_forecast_data
+            type: line
+            extend_to: now
+            unit: W
+            show:
+              in_header: false
+            data_generator: |
+              return entity.attributes.forecasts.map((entry) => {
+                 return [new Date(entry.period_end), entry.pv_estimate*1000];
+               });
+  - title: Detailed plots
+    path: plots2
+    panel: true
+    badges: []
+    cards:
+      - type: history-graph
+        entities:
+          - entity: sensor.battery_power
+          - entity: sensor.active_power
+          - entity: sensor.house_consumption
+          - entity: sensor.pv_power
+          - entity: sensor.battery_state_of_charge
+        refresh_interval: 0
+        hours_to_show: 24
+  - title: Details
+    path: test
+    type: sidebar
+    badges: []
+    cards:
+      - type: grid
+        cards:
+          - type: entities
+            title: Vandaag
+            entities:
+              - entity: sensor.energy_daily_buy_total
+                icon: mdi:factory
+                type: custom:multiple-entity-row
+                name: Buy
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_daily_buy_offpeak
+                    name: Nacht
+                  - entity: sensor.energy_daily_buy_peak
+                    name: Dag
+              - entity: sensor.energy_daily_sell_total
+                icon: mdi:transmission-tower
+                type: custom:multiple-entity-row
+                name: Sell
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_daily_sell_offpeak
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_daily_sell_peak
+                    name: Dag
+              - entity: sensor.energy_daily_load_total
+                icon: mdi:home
+                type: custom:multiple-entity-row
+                name: Verbruik
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_daily_load_offpeak
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_daily_load_peak
+                    name: Dag
+              - entity: sensor.energy_daily_cost
+                icon: mdi:currency-eur
+                type: custom:multiple-entity-row
+                name: Actual cost
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_daily_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_daily_peak_cost
+                    name: Dag
+            show_header_toggle: false
+            state_color: true
+          - type: entities
+            title: Maand
+            entities:
+              - entity: sensor.energy_monthly_buy_total
+                icon: mdi:factory
+                type: custom:multiple-entity-row
+                name: Buy
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_monthly_buy_offpeak
+                    name: Nacht
+                  - entity: sensor.energy_monthly_buy_peak
+                    name: Dag
+              - entity: sensor.energy_monthly_sell_total
+                icon: mdi:transmission-tower
+                type: custom:multiple-entity-row
+                name: Sell
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_monthly_sell_offpeak
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_monthly_sell_peak
+                    name: Dag
+              - entity: sensor.energy_monthly_load_total
+                icon: mdi:home
+                type: custom:multiple-entity-row
+                name: Verbruik
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_monthly_load_offpeak
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_monthly_load_peak
+                    name: Dag
+              - entity: sensor.energy_monthly_cost
+                icon: mdi:currency-eur
+                type: custom:multiple-entity-row
+                name: Actual cost
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_monthly_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_monthly_peak_cost
+                    name: Dag
+            show_header_toggle: false
+            state_color: true
+          - type: entities
+            title: Jaar
+            entities:
+              - entity: sensor.energy_yearly_buy_total
+                icon: mdi:factory
+                type: custom:multiple-entity-row
+                name: Buy
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_yearly_buy_offpeak
+                    name: Nacht
+                  - entity: sensor.energy_yearly_buy_peak
+                    name: Dag
+              - entity: sensor.energy_yearly_sell_total
+                icon: mdi:transmission-tower
+                type: custom:multiple-entity-row
+                name: Sell
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_yearly_sell_offpeak
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_yearly_sell_peak
+                    name: Dag
+              - entity: sensor.energy_yearly_load_total
+                icon: mdi:home
+                type: custom:multiple-entity-row
+                name: Verbruik
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_yearly_load_offpeak
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_yearly_load_peak
+                    name: Dag
+              - entity: sensor.energy_yearly_cost
+                icon: mdi:currency-eur
+                type: custom:multiple-entity-row
+                name: Actual cost
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_yearly_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_yearly_peak_cost
+                    name: Dag
+            show_header_toggle: false
+            state_color: true
+          - type: entities
+            title: Vandaag (EUR)
+            entities:
+              - entity: sensor.energy_daily_buy_cost
+                icon: mdi:factory
+                type: custom:multiple-entity-row
+                name: Buy
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_daily_buy_offpeak_cost2
+                    name: Nacht
+                  - entity: sensor.energy_daily_buy_peak_cost2
+                    name: Dag
+              - entity: sensor.energy_daily_sell_cost
+                icon: mdi:transmission-tower
+                type: custom:multiple-entity-row
+                name: Sell
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_daily_sell_offpeak_cost2
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_daily_sell_peak_cost2
+                    name: Dag
+              - entity: sensor.energy_daily_load_cost
+                icon: mdi:home
+                type: custom:multiple-entity-row
+                name: Verbruik
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_daily_load_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_daily_load_peak_cost
+                    name: Dag
+              - entity: sensor.energy_daily_cost
+                icon: mdi:currency-eur
+                type: custom:multiple-entity-row
+                name: Actual cost
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_daily_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_daily_peak_cost
+                    name: Dag
+            show_header_toggle: false
+            state_color: true
+          - type: entities
+            title: Maand (EUR)
+            entities:
+              - entity: sensor.energy_monthly_buy_cost
+                icon: mdi:factory
+                type: custom:multiple-entity-row
+                name: Buy
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_monthly_buy_offpeak_cost
+                    name: Nacht
+                  - entity: sensor.energy_monthly_buy_peak_cost
+                    name: Dag
+              - entity: sensor.energy_monthly_sell_cost
+                icon: mdi:transmission-tower
+                type: custom:multiple-entity-row
+                name: Sell
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_monthly_sell_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_monthly_sell_peak_cost
+                    name: Dag
+              - entity: sensor.energy_monthly_load_cost
+                icon: mdi:home
+                type: custom:multiple-entity-row
+                name: Verbruik
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_monthly_load_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_monthly_load_peak_cost
+                    name: Dag
+              - entity: sensor.energy_monthly_cost
+                icon: mdi:currency-eur
+                type: custom:multiple-entity-row
+                name: Actual cost
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_monthly_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_monthly_peak_cost
+                    name: Dag
+            show_header_toggle: false
+            state_color: true
+          - type: entities
+            title: Jaar (EUR)
+            entities:
+              - entity: sensor.energy_yearly_buy_cost
+                icon: mdi:factory
+                type: custom:multiple-entity-row
+                name: Buy
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_yearly_buy_offpeak_cost
+                    name: Nacht
+                  - entity: sensor.energy_yearly_buy_peak_cost
+                    name: Dag
+              - entity: sensor.energy_yearly_sell_cost
+                icon: mdi:transmission-tower
+                type: custom:multiple-entity-row
+                name: Sell
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_yearly_sell_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_yearly_sell_peak_cost
+                    name: Dag
+              - entity: sensor.energy_yearly_load_cost
+                icon: mdi:home
+                type: custom:multiple-entity-row
+                name: Verbruik
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_yearly_load_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_yearly_load_peak_cost
+                    name: Dag
+              - entity: sensor.energy_yearly_cost
+                icon: mdi:currency-eur
+                type: custom:multiple-entity-row
+                name: Actual cost
+                state_header: Total
+                entities:
+                  - entity: sensor.energy_yearly_offpeak_cost
+                    name: Nacht
+                    show_name: false
+                  - entity: sensor.energy_yearly_peak_cost
+                    name: Dag
+            show_header_toggle: false
+            state_color: true
+        columns: 3
+      - type: entities
+        entities:
+          - type: attribute
+            entity: sun.sun
+            attribute: elevation
+            name: Sun elevation
+            prefix: '~'
+            suffix: Units
+          - entity: sensor.solcast_forecast_today
+            name: Remaining production vandaag
+          - entity: sensor.solcast_forecast_tommorrow
+            name: Forecast production morgen
+          - entity: sensor.solcast_forecast_day_after_tommorrow
+            name: Forecast production overmorgen
+          - entity: sensor.grid_buy
+          - entity: sensor.grid_sell
+          - entity: sensor.pv_battery_charge
+          - entity: sensor.pv_battery_use
+          - entity: sensor.pv_to_house
+          - entity: sensor.total_load
+          - entity: sensor.pv_total_solar_use
+          - entity: sensor.meter_total_energy_import
+          - entity: sensor.meter_total_energy_export
+        header:
+          type: picture
+          image: /local/Solar_header.jpg
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+        view_layout:
+          position: sidebar
+  - type: panel
+    title: MPPT
+    path: mppt
+    badges: []
+    cards:
+      - type: history-graph
+        entities:
+          - entity: sensor.pv1_voltage
+          - entity: sensor.pv2_voltage
+          - entity: sensor.pv1_current
+          - entity: sensor.pv2_current
+          - entity: sensor.pv1_power
+          - entity: sensor.pv2_power
+        refresh_interval: 0
+        hours_to_show: 4
+  - title: Kwartiervermogen
+    path: kwartiervermogen
+    type: sidebar
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.power_consumed
+          - entity: sensor.quarter_hourly_grid_consumption
+          - entity: input_number.kwartierpiek
+          - entity: input_number.max_peak
+          - entity: input_number.january_peak
+          - entity: input_number.february_peak
+          - entity: input_number.march_peak
+          - entity: input_number.april_peak
+          - entity: input_number.may_peak
+          - entity: input_number.june_peak
+          - entity: input_number.july_peak
+          - entity: input_number.august_peak
+          - entity: input_number.september_peak
+          - entity: input_number.october_peak
+          - entity: input_number.november_peak
+          - entity: input_number.december_peak
+          - entity: sensor.year_peak
+        view_layout:
+          position: sidebar
+      - type: custom:apexcharts-card
+        update_interval: 1min
+        graph_span: 24h
+        header:
+          show: true
+          title: Kwartierpieken
+          show_states: true
+          colorize_states: true
+        apex_config:
+          legend:
+            show: false
+          plotOptions:
+            bar:
+              columnWidth: 100%
+        series:
+          - entity: input_number.max_peak
+            extend_to: end
+          - entity: sensor.grid_buy
+            name: Grid buy
+            transform: return x / 1000;
+            unit: kW
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 1min
+          - entity: sensor.grid_buy_while_car_charging
+            type: column
+            transform: return x / 1000;
+            unit: kW
+            opacity: 0.1
+            group_by:
+              func: avg
+              duration: 1min
+          - entity: input_number.kwartierpiek
+            offset: +7.5min
+            extend_to: end
+            group_by:
+              func: avg
+              duration: 1min
+      - type: history-graph
+        entities:
+          - entity: input_number.kwartierpiek
+          - entity: input_number.max_peak
+        hours_to_show: 240
+        refresh_interval: 0
+  - theme: Backend-selected
+    title: Battery plots
+    path: battery-plots
+    type: panel
+    badges: []
+    cards:
+      - type: history-graph
+        entities:
+          - entity: sensor.energy_batt_charged
+          - entity: sensor.energy_batt_discharge
+          - entity: sensor.battery_state_of_charge
+        hours_to_show: 72
+        refresh_interval: 1800
+
