@@ -1,0 +1,257 @@
+input_number:
+  wout_set_temperature:
+    name: Wout target temperature
+    max: 25
+    min: 13
+    step: 0.5
+    unit_of_measurement: "°C"
+
+automation:
+  - id: climate_wout_off
+    alias: Climate wout off
+    description: Turn off the heating when target temp has been reached
+    mode: single
+    trigger:
+      - platform: template
+        value_template: >-
+          {{ states.sensor.ble_temperature_room_sensor_wout.state > states.input_number.wout_set_temperature.state }}
+    condition: []
+    action:
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.thermostaat_wout_thermostat
+        data:
+          temperature: 5
+
+  - id: climate_wout_on
+    alias: Climate wout on
+    description: Turn on the heating when actual drops below target temp
+    mode: single
+    trigger:
+      - platform: template
+        value_template: >-
+          {{ states.sensor.ble_temperature_room_sensor_wout.state < states.input_number.wout_set_temperature.state }}
+    condition:
+      - condition: state
+        entity_id: binary_sensor.door_wout
+        state: 'off'
+    action:
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.thermostaat_wout_thermostat
+        data:
+          temperature: 30
+
+  - id: climate_wout_start_schedule_weekdays
+    alias: Climate wout start of schedule weekdays
+    description: Set target to 20C at defined times
+    mode: single
+    trigger:
+      - platform: time
+        at: '06:20:00'
+      - platform: time
+        at: '16:00:00'
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - thu
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.wout_set_temperature
+        data:
+          value: 19
+
+  - id: climate_wout_start_schedule_wednesday
+    alias: Climate wout start of schedule wednesday
+    description: Set target to 20C at defined times
+    mode: single
+    trigger:
+      - platform: time
+        at: '12:00:00'
+    condition:
+      - condition: time
+        weekday:
+          - wed
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.wout_set_temperature
+        data:
+          value: 19
+          
+  - id: climate_wout_start_schedule_weekend
+    alias: Climate wout start of schedule weekend
+    description: Set target to 20C at defined times
+    mode: single
+    trigger:
+      - platform: time
+        at: '08:20:00'
+    condition:
+      - condition: time
+        weekday:
+          - sat
+          - sun
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.wout_set_temperature
+        data:
+          value: 19
+
+  - id: climate_wout_stop_schedule_weekdays
+    alias: Climate wout stop of schedule weekdays
+    description: Set target to 20C at defined times
+    mode: single
+    trigger:
+      - platform: time
+        at: '06:50:00'
+      - platform: time
+        at: '18:00:00'
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.wout_set_temperature
+        data:
+          value: 16
+
+  - id: climate_wout_stop_schedule_nightly
+    alias: Climate wout stop nightly
+    description: Set target to 20C at defined times
+    mode: single
+    trigger:
+      - platform: time
+        at: '20:00:00'
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.wout_set_temperature
+        data:
+          value: 16
+
+  - id: notify_door_open_wout
+    alias: Notify_door_wout
+    description: 'Turn down the heating when door left open'
+    trigger:
+      - type: opened
+        platform: device
+        device_id: debc66adaf96b1a095cb984e980f8d80
+        entity_id: binary_sensor.door_wout
+        domain: binary_sensor
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 30
+          milliseconds: 0
+    condition:
+      - condition: numeric_state
+        entity_id: climate.thermostaat_wout_thermostat
+        attribute: temperature
+        above: '16'
+    action:
+      - service: script.speech_notification_service
+        data:
+          message: Warning, Wawt left his door open so I turned off his radiator.
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.thermostaat_wout_thermostat
+        data:
+          temperature: 5
+
+  - id: climate_wout_resume_on_door_closed
+    alias: Start Wout climate when door is closed
+    description: 'Start Wout climate when door is closed'
+    trigger:
+      - type: not_opened
+        platform: device
+        device_id: debc66adaf96b1a095cb984e980f8d80
+        entity_id: binary_sensor.door_wout
+        domain: binary_sensor
+        for:
+          hours: 0
+          minutes: 1
+          seconds: 30
+          milliseconds: 0
+    condition:
+      - condition: numeric_state
+        entity_id: climate.thermostaat_wout_thermostat
+        attribute: temperature
+        below: '10'
+      - condition: template
+        value_template: >-
+          {{ states.sensor.ble_temperature_room_sensor_wout.state <
+          states.input_number.wout_set_temperature.state }}
+    action:
+      - service: script.speech_notification_service
+        data:
+          message: Wawt closed his door. Turning the heating back on.
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.thermostaat_wout_thermostat
+        data:
+          temperature: 30
+    
+  - id: notify_heating_wout_on
+    alias: Notify_heating_wout_on
+    description: 'Warn if the room temperature is above 20.5C while outside is below 15C'
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.ble_temperature_room_sensor_wout
+        above: '20.5'
+        for:
+          hours: 0
+          minutes: 10
+          seconds: 0
+          milliseconds: 0
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.openweathermap_temperature
+        below: '15'
+      - condition: state
+        entity_id: climate.thermostaat_wout_thermostat
+        attribute: hvac_action
+        state: heating
+    action:
+      - service: script.speech_notification_service
+        data:
+          message: >-
+            {{ 'Warning: The temperature seems high in Wawts room. Please check if the
+            heating should be turned down' }}
+    mode: single
+
+script:
+  thermostat_wout_toggle:
+    alias: Thermostat wout toggle
+    sequence:
+    - choose:
+      - conditions:
+        - condition: template
+          value_template: '{{ states.input_number.wout_set_temperature.state | float(0) > 18.5 }}'
+        sequence:
+        - service: input_number.set_value
+          target:
+            entity_id: input_number.wout_set_temperature
+          data:
+            value: 16
+      - conditions:
+        - condition: template
+          value_template: '{{ states.input_number.wout_set_temperature.state | float(0) < 16.5 }}'
+        sequence:
+        - service: input_number.set_value
+          target:
+            entity_id: input_number.wout_set_temperature
+          data:
+            value: 19
+      default: []
+    mode: single
+    icon: mdi:radiator

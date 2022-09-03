@@ -1,0 +1,162 @@
+automation:
+  - id: holiday_lights_wout_start
+    alias: Holiday_lights_wout_start
+    mode: single
+    trigger:
+      - platform: time
+        at: '19:00:00'
+    condition: []
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,120) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_on
+        target:
+          entity_id: light.wout_on_off
+  - id: holiday_lights_wout_stop
+    alias: Holiday_lights_wout_stop
+    mode: single
+    trigger:
+      - platform: time
+        at: '21:00:00'
+    condition: []
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,45) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_off
+        target:
+          entity_id: light.wout_on_off
+
+  - id: holiday_lights_jana_start
+    alias: Holiday_lights_jana_start
+    mode: single
+    trigger:
+      - platform: time
+        at: '19:00:00'
+    condition: []
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,120) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_on
+        target:
+          entity_id: light.light_jana
+  - id: holiday_lights_jana_stop
+    alias: Holiday_lights_jana_stop
+    mode: single
+    trigger:
+      - platform: time
+        at: '21:00:00'
+    condition: []
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,45) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_off
+        target:
+          entity_id: light.light_jana
+
+  - id: holiday_lights_bathroom_start
+    alias: Holiday_lights_bathroom_start
+    mode: single
+    trigger:
+      - platform: time
+        at: '19:30:00'
+    condition: []
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,120) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: switch.turn_on
+        target:
+          entity_id: switch.light_bathroom_local
+  - id: holiday_lights_bathroom_stop
+    alias: Holiday_lights_bathroom_stop
+    mode: single
+    trigger:
+      - platform: time
+        at: '22:00:00'
+    condition: []
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,45) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: switch.turn_off
+        target:
+          entity_id: switch.light_bathroom_local
+
+  - id: holiday_lights_dinner_start
+    alias: Holiday_lights_dinner_start
+    mode: single
+    trigger:
+      - platform: time
+        at: '18:30:00'
+    condition: []
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,120) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: switch.turn_on
+        target:
+          entity_id: switch.light_dinner_table_local
+  - id: holiday_lights_dinner_stop
+    alias: Holiday_lights_dinner_stop
+    mode: single
+    trigger:
+      - platform: time
+        at: '22:00:00'
+    condition: []
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,45) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: switch.turn_off
+        target:
+          entity_id: switch.light_dinner_table_local
+
+  - id: holiday_lights_hallway
+    alias: holiday_lights_hallway
+    mode: single
+    trigger:
+      - platform: time_pattern
+        minutes: /20
+    condition:
+      - condition: time
+        after: '18:00:00'
+        before: '23:59:00'
+    action:
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,10) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: homeassistant.turn_on
+        target:
+          entity_id: "{{ [ 'light.light_gang', 'switch.light_hallway_up_local' ] | random }}"
+      - delay:
+          hours: 0
+          minutes: '{{ range(1,4) | random }}'
+          seconds: 0
+          milliseconds: 0
+      - service: homeassistant.turn_off
+        target:
+          entity_id:
+            - light.light_gang
+            - switch.light_hallway_up_local

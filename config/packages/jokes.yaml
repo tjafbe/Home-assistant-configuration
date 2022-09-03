@@ -1,0 +1,13 @@
+sensor:
+  - platform: rest
+    name: dad_joke    
+    headers:
+      User-Agent: Home Assistant
+      Accept: application/json
+    resource: https://icanhazdadjoke.com/
+    method: GET
+    value_template: '1'  # dummy value, not used; avoids the "State max length is 255 characters" error
+    json_attributes:
+      - joke
+    scan_interval: 24:00
+    force_update: false

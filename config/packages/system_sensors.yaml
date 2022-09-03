@@ -1,0 +1,133 @@
+sensor:
+
+  #=======================
+  #=== Raspberry Pi Power
+  #=======================
+#  - platform: rpi_power
+#    text_state: True
+
+  #=============================================
+  #=== Last boot time, Disk, memory & CPU usage
+  #=============================================
+  - platform: systemmonitor
+    resources:
+      - type: last_boot
+      - type: disk_use_percent
+        arg: /
+      - type: memory_use_percent
+      - type: processor_use
+  
+  #====================
+  #=== CPU Temperature
+  #====================
+  - platform: command_line
+    name: CPU Temp
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(0) }}'
+
+  - platform: template
+    sensors:
+
+      #=========================================
+      #=== Raspberry Pi last boot date and time
+      #=========================================
+      last_boot_date_time:
+        friendly_name: Last Boot
+        value_template: >
+          {% set date = as_timestamp(states('sensor.last_boot')) | timestamp_custom('%d') %}
+          {% set date = '{:01}'.format(date | int) %}
+          {% if date in ('1', '21', '31') %}
+            {% set date = date ~ 'st' %}
+          {% elif date in ('2', '22') %}
+            {% set date = date ~ 'nd' %}
+          {% elif date in ('3', '23') %}
+            {% set date = date ~ 'rd' %}
+          {% else %}
+            {% set date = date ~ 'th' %}
+          {% endif %}
+
+          {{ as_timestamp(states('sensor.last_boot')) | timestamp_custom('%H:%M on %a') }} {{ date }} {{ as_timestamp(states('sensor.last_boot')) | timestamp_custom('%b %Y') }}
+
+      count_automations:
+        value_template: >
+          {%- set domains = ['automation'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Scripts
+      count_scripts:
+        value_template: >
+          {%- set domains = ['script'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Device Trackers
+      count_device_trackers:
+        value_template: >
+          {%- set domains = ['device_tracker'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}        
+
+    #----- Count Binary Sensors
+      count_binary_sensors:
+        value_template: >
+          {%- set domains = ['binary_sensor'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Sensors
+      count_sensors:
+        value_template: >
+          {%- set domains = ['sensor'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Switches
+      count_switches:
+        value_template: >
+          {%- set domains = ['switch'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count lights
+      count_lights:
+        value_template: >
+          {%- set domains = ['light'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}

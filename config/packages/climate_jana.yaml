@@ -1,0 +1,218 @@
+input_number:
+  jana_set_temperature:
+    name: jana target temperature
+    max: 25
+    min: 13
+    step: 0.5
+    unit_of_measurement: "°C"
+
+automation:
+  - id: climate_jana_off
+    alias: Climate jana off
+    description: Turn off the heating when target temp has been reached
+    mode: single
+    trigger:
+      - platform: template
+        value_template: >-
+          {{ states.sensor.ble_temperature_room_sensor_jana.state > states.input_number.jana_set_temperature.state }}
+    condition: []
+    action:
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.thermostaat_jana_thermostat
+        data:
+          temperature: 5
+
+  - id: climate_jana_on
+    alias: Climate jana on
+    description: Turn on the heating when actual drops below target temp
+    mode: single
+    trigger:
+      - platform: template
+        value_template: >-
+          {{ states.sensor.ble_temperature_room_sensor_jana.state < states.input_number.jana_set_temperature.state }}
+    condition:
+      - condition: state
+        entity_id: binary_sensor.door_jana
+        state: 'off'
+    action:
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.thermostaat_jana_thermostat
+        data:
+          temperature: 30
+
+  - id: climate_jana_start_schedule_weekdays
+    alias: Climate jana start of schedule weekdays
+    description: Set target to 20C at defined times
+    mode: single
+    trigger:
+      - platform: time
+        at: '06:20:00'
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.jana_set_temperature
+        data:
+          value: 18
+
+  - id: climate_jana_stop_schedule_weekdays
+    alias: Climate jana stop of schedule weekdays
+    description: Set target to 20C at defined times
+    mode: single
+    trigger:
+      - platform: time
+        at: '06:50:00'
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.jana_set_temperature
+        data:
+          value: 16
+
+  - id: climate_jana_stop_schedule_nightly
+    alias: Climate jana stop nightly
+    description: Set target to 20C at defined times
+    mode: single
+    trigger:
+      - platform: time
+        at: '20:00:00'
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.jana_set_temperature
+        data:
+          value: 16
+
+  - id: notify_door_open_jana
+    alias: Notify_door_jana
+    description: 'Turn down the heating when door left open'
+    trigger:
+      - type: opened
+        platform: device
+        device_id: 426a243e76dbb049f5c7c39178fdf3d7
+        entity_id: binary_sensor.door_jana
+        domain: binary_sensor
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 30
+          milliseconds: 0
+    condition:
+      - condition: numeric_state
+        entity_id: climate.thermostaat_jana_thermostat
+        attribute: temperature
+        above: '16'
+    action:
+      - service: script.speech_notification_service
+        data:
+          message: Warning, Iana left her door open so I turned off her radiator.
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.thermostaat_jana_thermostat
+        data:
+          temperature: 5
+
+  - id: climate_jana_resume_on_door_closed
+    alias: Start Jana climate when door is closed
+    description: 'Start Jana climate when door is closed'
+    trigger:
+      - type: not_opened
+        platform: device
+        device_id: 426a243e76dbb049f5c7c39178fdf3d7
+        entity_id: binary_sensor.door_jana
+        domain: binary_sensor
+        for:
+          hours: 0
+          minutes: 1
+          seconds: 30
+          milliseconds: 0
+    condition:
+      - condition: numeric_state
+        entity_id: climate.thermostaat_jana_thermostat
+        attribute: temperature
+        below: '10'
+      - condition: template
+        value_template: >-
+          {{ states.sensor.ble_temperature_room_sensor_jana.state <
+          states.input_number.jana_set_temperature.state }}
+    action:
+      - service: script.speech_notification_service
+        data:
+          message: Iana closed her door. Turning the heating back on.
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.thermostaat_jana_thermostat
+        data:
+          temperature: 30
+
+  - id: notify_heating_jana_on
+    alias: Notify_heating_jana_on
+    description: 'Warn if the room temperature is above 20.5C while outside is below 15C'
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.ble_temperature_room_sensor_jana
+        above: '20.5'
+        for:
+          hours: 0
+          minutes: 10
+          seconds: 0
+          milliseconds: 0
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.openweathermap_temperature
+        below: '15'
+      - condition: state
+        entity_id: climate.thermostaat_jana_thermostat
+        attribute: hvac_action
+        state: heating
+    action:
+      - service: script.speech_notification_service
+        data:
+          message: >-
+            {{ 'Warning: The temperature seems high in Ianas room. Please check if the
+            heating should be turned down' }}
+    mode: single
+
+script:
+  thermostat_jana_toggle:
+    alias: Thermostat jana toggle
+    sequence:
+    - choose:
+      - conditions:
+        - condition: template
+          value_template: '{{ states.input_number.jana_set_temperature.state | float(0) > 18.5 }}'
+        sequence:
+        - service: input_number.set_value
+          target:
+            entity_id: input_number.jana_set_temperature
+          data:
+            value: 16
+      - conditions:
+        - condition: template
+          value_template: '{{ states.input_number.jana_set_temperature.state | float(0) < 16.5 }}'
+        sequence:
+        - service: input_number.set_value
+          target:
+            entity_id: input_number.jana_set_temperature
+          data:
+            value: 18
+      default: []
+    mode: single
+    icon: mdi:radiator

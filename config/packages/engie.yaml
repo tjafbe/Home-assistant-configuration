@@ -1,0 +1,47 @@
+sensor:
+  - platform: scrape
+    resource: https://www.engie.be/nl/energie/elektriciteit-gas/prijzen-voorwaarden/indexatieparameters/indexatieparameters-elektriciteit
+    name: Electricity price month
+    select: ".cell1"
+    index: 0
+  - platform: scrape
+    resource: https://www.engie.be/nl/energie/elektriciteit-gas/prijzen-voorwaarden/indexatieparameters/indexatieparameters-elektriciteit
+    name: Electriciteit index Endex303
+    select: ".cell2"
+    index: 0
+    value_template: '{{ value.split("\n")[4]|replace(",",".") }}'
+    unit_of_measurement: "EUR/MWh"
+  - platform: scrape
+    resource: https://www.engie.be/nl/energie/elektriciteit-gas/prijzen-voorwaarden/indexatieparameters/indexatieparameters-gas
+    name: Gas index TTF103
+    select: ".cell2"
+    index: 0
+    value_template: '{{ value.split("\n")[5]|replace(",",".") }}'
+    unit_of_measurement: "EUR/MWh"
+  - platform: template
+    sensors:
+      electriciteitprijs_dag_afname:
+        friendly_name: Afname prijs electriciteit dag
+        icon_template: mdi:currency-eur
+        unit_of_measurement: "cEUR/kWh"
+        value_template: "{{ ((states('sensor.electriciteit_index_endex303')|float*0.1258 + 3.226)*1.06 + 0.53 + 2.544 + 9.63 + 1.16 + 0.20417 + 1.4416)|round(3) }}"
+      electriciteitprijs_nacht_afname:
+        friendly_name: Afname prijs electriciteit nacht
+        icon_template: mdi:currency-eur
+        unit_of_measurement: "cEUR/kWh"
+        value_template: "{{ ((states('sensor.electriciteit_index_endex303')|float*0.0977 + 1.88)*1.06 + 0.53 + 2.544 + 7.06 + 1.16 + 0.20417 + 1.4416)|round(3) }}"
+      electriciteitprijs_dag_injectie:
+        friendly_name: Injectie prijs electriciteit dag
+        icon_template: mdi:currency-eur
+        unit_of_measurement: "cEUR/kWh"
+        value_template: "{{ ((states('sensor.electriciteit_index_endex303')|float*0.1082 + 0.2))|round(3) }}"
+      electriciteitprijs_nacht_injectie:
+        friendly_name: Injectie prijs electriciteit nacht
+        icon_template: mdi:currency-eur
+        unit_of_measurement: "cEUR/kWh"
+        value_template: "{{ ((states('sensor.electriciteit_index_endex303')|float*0.0526 + 0.2))|round(3) }}"
+      gasprijs:
+        friendly_name: Prijs gas
+        icon_template: mdi:currency-eur
+        unit_of_measurement: "cEUR/kWh"
+        value_template: "{{ ((states('sensor.gas_index_ttf103')|float*0.1 + 1.115)*1.06 + 0.775 + 0.141 + 0.10577 + 0.05724)|round(3) }}"
