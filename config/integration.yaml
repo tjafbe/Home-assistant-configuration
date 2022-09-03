@@ -1,0 +1,36 @@
+  - platform: integration
+    source: sensor.ctclamp_measured_power
+    name: energy_spent_ctclamp
+    unit_prefix: k
+    method: left
+    round: 3
+  - platform: integration
+    source: sensor.smart_plug_tv_power_2
+    name: energy_TV
+    unit_prefix: k
+    method: left
+    round: 3
+  - platform: integration
+    source: sensor.smart_plug_playroom_power_2
+    name: energy_speelkamer
+    unit_prefix: k
+    method: left
+    round: 3
+  - platform: integration
+    source: sensor.smart_plug_kelder_power_2
+    name: energy_kelder
+    unit_prefix: k
+    method: left
+    round: 3
+  - platform: integration
+    source: sensor.pv_battery_charge
+    name: energy_battery_charge
+    unit_prefix: k
+    method: left
+    round: 3
+  - platform: integration
+    source: sensor.pv_battery_use
+    name: energy_battery_discharge
+    unit_prefix: k
+    method: left
+    round: 3  

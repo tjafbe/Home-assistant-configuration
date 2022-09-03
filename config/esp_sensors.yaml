@@ -1,0 +1,11 @@
+  - platform: template
+    sensors:
+        regenwaterput_percent:
+          value_template: "{{ (states('sensor.regenwaterput_volume') |float(0) / 5000*100) | int }}"
+          unit_of_measurement: '%'
+        watertank_level:
+          value_template: "{{ ((1 - (states('sensor.ultrasonic_sensor') |float(0) + 0.07) / 1.7)*5000) | int }}"
+          unit_of_measurement: 'L'
+        ctclamp_measured_power:
+          value_template: "{{ ((states.sensor.on_grid_l1_voltage.state | float(0))*(states.sensor.measured_current.state | float(0)))|int }}"
+          unit_of_measurement: 'W'

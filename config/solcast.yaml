@@ -1,0 +1,68 @@
+  - platform: template
+    sensors:
+        solcast_forecast_average_30min:
+            value_template: "{{ (state_attr('sensor.solcast_forecast_data', 'forecasts')[0].pv_estimate|default('variable is not defined')|round(4))*1000 }}"
+            unit_of_measurement: 'W'
+        solcast_forecast_average_60min:
+            value_template: >-
+              {{ ((state_attr('sensor.solcast_forecast_data', 'forecasts')[0].pv_estimate|default('variable is not defined') + state_attr('sensor.solcast_forecast_data', 'forecasts')[1].pv_estimate|default('variable is not defined'))*500)|round(0) }}
+            unit_of_measurement: 'W'
+        solcast_forecast_today:
+            value_template: >-
+              {% set ns = namespace (fc_today = 0) %}
+              {% for forecast in state_attr('sensor.solcast_forecast_data', 'forecasts')|default('variable is not defined') %}
+                {% set daydiff = as_local(strptime(forecast.period_end, '%Y-%m-%dT%H:%M:%S.%f0Z').replace(tzinfo=utcnow().tzinfo)).date() - as_local(utcnow()).date() %} 
+                {% if daydiff.days == 0 %}
+                  {% set ns.fc_today = ns.fc_today + (forecast.pv_estimate/2)|float(0) %}
+                {%- endif %}
+              {%- endfor %}
+              {{ ns.fc_today|round(2) }}
+            unit_of_measurement: 'kWh'
+        solcast_forecast_today_max:
+            value_template: >-
+              {% set ns = namespace (fc_today_max = 0) %}
+              {% for forecast in state_attr('sensor.solcast_forecast_data', 'forecasts')|default('variable is not defined') %}
+                {% set daydiff = as_local(strptime(forecast.period_end, '%Y-%m-%dT%H:%M:%S.%f0Z').replace(tzinfo=utcnow().tzinfo)).date() - as_local(utcnow()).date() %} 
+                {% if daydiff.days == 0 %}
+                  {% if ns.fc_today_max < forecast.pv_estimate|float(0) %}
+                    {% set ns.fc_today_max = forecast.pv_estimate|float(0) %}
+                  {%- endif %}
+                {%- endif %}
+              {%- endfor %}
+              {{ ns.fc_today_max|round(2) }}
+            unit_of_measurement: 'kW'
+        solcast_forecast_today_max_time:
+            value_template: >-
+              {% set ns = namespace (fc_today_max = 0, fc_today_max_time = 0) %}
+              {% for forecast in state_attr('sensor.solcast_forecast_data', 'forecasts')|default('variable is not defined') %}
+                {% set daydiff = as_local(strptime(forecast.period_end, '%Y-%m-%dT%H:%M:%S.%f0Z').replace(tzinfo=utcnow().tzinfo)).date() - as_local(utcnow()).date() %} 
+                {% if daydiff.days == 0 %}
+                  {% if ns.fc_today_max < forecast.pv_estimate|float(0) %}
+                    {% set ns.fc_today_max = forecast.pv_estimate|float(0) %}
+                    {% set ns.fc_today_max_time = as_local(strptime(forecast.period_end, '%Y-%m-%dT%H:%M:%S.%f0Z').replace(tzinfo=utcnow().tzinfo)).time() %}
+                  {%- endif %}
+                {%- endif %}
+              {%- endfor %}
+              {{ ns.fc_today_max_time }}
+        solcast_forecast_tommorrow:
+            value_template: >-
+              {% set ns = namespace (fc_tommorrow = 0) %}
+              {% for forecast in state_attr('sensor.solcast_forecast_data', 'forecasts')|default('variable is not defined') %}
+                {% set daydiff = as_local(strptime(forecast.period_end, '%Y-%m-%dT%H:%M:%S.%f0Z').replace(tzinfo=utcnow().tzinfo)).date() - as_local(utcnow()).date() %} 
+                {% if daydiff.days == 1 %}
+                  {% set ns.fc_tommorrow = ns.fc_tommorrow + (forecast.pv_estimate/2)|float(0) %}
+                {%- endif %}
+              {%- endfor %}
+              {{ ns.fc_tommorrow|round(2) }}
+            unit_of_measurement: 'kWh'
+        solcast_forecast_day_after_tommorrow:
+            value_template: >-
+              {% set ns = namespace (fc_dayAftTom = 0) %}
+              {% for forecast in state_attr('sensor.solcast_forecast_data', 'forecasts')|default('variable is not defined') %}
+                {% set daydiff = as_local(strptime(forecast.period_end, '%Y-%m-%dT%H:%M:%S.%f0Z').replace(tzinfo=utcnow().tzinfo)).date() - as_local(utcnow()).date() %} 
+                {% if daydiff.days == 2 %}
+                  {% set ns.fc_dayAftTom = ns.fc_dayAftTom + (forecast.pv_estimate/2)|float(0) %}
+                {%- endif %}
+              {%- endfor %}
+              {{ ns.fc_dayAftTom|round(2) }}
+            unit_of_measurement: 'kWh'

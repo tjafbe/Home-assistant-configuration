@@ -1,0 +1,59 @@
+  - platform: template
+    sensors:
+        pv_total_solar_use:
+          value_template: '{{ (states.sensor.total_pv_generation.state | float(0) )-(states.sensor.meter_total_energy_export.state | float(0)) }}'
+          unit_of_measurement: 'kWh'
+          friendly_name: "PV E self-use total"
+        pv_to_house:
+          value_template: '{% set pvout = states.sensor.pv_power.state | float(0) %}
+                        {% set batt = states.sensor.battery_power.state | float(0) %}
+                        {% set grid = states.sensor.active_power.state | float(0) %}
+                        {% if ((grid <= 0 ) and (batt <= 0 )) %}
+                            {{ pvout+batt | float(0) }}
+                        {% elif ((grid <= 0 ) and (batt > 0 )) %}
+                            {{ pvout | float(0) }}
+                        {% elif ((grid > 0 ) and (batt <= 0 )) %}
+                            {{ pvout+batt-grid | float(0) }}
+                        {% elif ((grid > 0 ) and (batt > 0 )) %}
+                            {{ pvout-grid | float(0) }}
+                        {% else %}
+                            0
+                        {% endif %}'
+          device_class: power
+          unit_of_measurement: W
+        grid_buy:
+          value_template: '{% set grid_cons = states.sensor.active_power.state | int %}
+                        {% if grid_cons < 0 %}
+                            {{ -grid_cons | int }}
+                        {% else %}
+                            0
+                        {% endif %}'
+          device_class: power
+          unit_of_measurement: W
+        grid_sell:
+          value_template: '{% set grid_sell = states.sensor.active_power.state | int %}
+                        {% if grid_sell > 0 %}
+                            {{ grid_sell | int }}
+                        {% else %}
+                            0
+                        {% endif %}'
+          device_class: power
+          unit_of_measurement: W
+        pv_battery_charge:
+          value_template: '{% set batt_cons = states.sensor.battery_power.state | int %}
+                        {% if batt_cons < 0 %}
+                            {{ -batt_cons | int }}
+                        {% else %}
+                            0
+                        {% endif %}'
+          device_class: power
+          unit_of_measurement: W
+        pv_battery_use:
+          value_template: '{% set batt_const = states.sensor.battery_power.state | int %}
+                        {% if batt_const > 0 %}
+                            {{ batt_const | int }}
+                        {% else %}
+                            0
+                        {% endif %}'
+          device_class: power
+          unit_of_measurement: W

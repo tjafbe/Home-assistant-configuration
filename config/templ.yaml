@@ -1,0 +1,16 @@
+  - platform: template
+    sensors:
+        media_off:
+          value_template: "{{ ((states.media_player.chromecast.state == 'off') or (states.media_player.chromecast.state == 'unavailable') or (states.media_player.chromecast.attributes.app_name == 'Backdrop')) and ((states.binary_sensor.xbox_one.state == 'off') or (states.binary_sensor.xbox_one.state == 'unavailable')) }}"
+        living_room_speaker_disconnected:
+          value_template: "{{ is_state('media_player.living_room_speaker', 'unavailable') }}"
+        dishwasher_remaining:
+          value_template: "{{ (states('sensor.dishwasher_remaining_program_time') | as_datetime -now()).total_seconds()| timestamp_custom('%Hh %Mm', false)  }}"
+        dryer_remaining:
+          value_template: "{{ (states('sensor.dryer_dryer_completion_time') | as_datetime -now()).total_seconds()| timestamp_custom('%Hh %Mm', false)  }}"
+        dryer_cycle_energy:
+          value_template: "{{ (states('sensor.dryer_energy')|float(0) - states('input_text.dryer_energy_start_cycle')|float(0)) |round(1) }}"
+          unit_of_measurement: 'kWh'
+        solar_production_remaining_excl_home_battery_charge:
+          value_template: "{{ states('sensor.solcast_forecast_today')|int - ((100-states('sensor.battery_state_of_charge') | int)/100*9) - (0.5*(18*60 - as_timestamp(now()) |timestamp_custom('%H',false) |int * 60 - as_timestamp(now()) |timestamp_custom('%M',false) |int)/60) }}"
+          unit_of_measurement: 'kWh'

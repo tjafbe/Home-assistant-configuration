@@ -1,0 +1,102 @@
+default_config:
+
+logger:
+  default: info
+    
+lovelace:
+  resources:
+    - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
+      type: module
+
+spotcast:
+  sp_dc: !secret spotcast_sp_dc
+  sp_key: !secret spotcast_sp_key
+
+skodaconnect:
+  username: !secret superb_login
+  password: !secret superb_password
+  spin: !secret superb_spin
+  scandinavian_miles: false
+  scan_interval:
+    minutes: 2
+  name:
+    tmbjw9np1m7049203: 'Superb'
+
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_utc'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+  - platform: rest
+    name: solcast_forecast_data
+    json_attributes:
+      - forecasts
+    resource: !secret solcast_resource
+    method: GET
+    value_template: "{{ value_json.forecasts[0].pv_estimate|round(2) }}"
+    unit_of_measurement: "kW"
+    device_class: power
+    scan_interval: 00:30
+    force_update: true
+
+sensor templ: !include templ.yaml		# template sensors
+sensor solcast: !include solcast.yaml		# sensors related to Solcast
+sensor sems: !include sems.yaml			# sensors related to Goodwe SEMS portal
+sensor esp: !include esp_sensors.yaml		# sensors related to esphome
+sensor energy_calc: !include energy_calc.yaml	# everything for calculations of electricity consumption
+sensor integration: !include integration.yaml	# all the integration sensors (mostly needed for various energy calculations)
+sensor filters: !include filters.yaml		# filter sensors
+
+utility_meter: !include utility.yaml		# all the utility sensors (mostly needed for various energy calculations)
+
+binary_sensor: !include binary_sensor.yaml	# binary sensors
+
+shell_command: !include shell.yaml		# rasperbby pi shell command entities
+
+recorder: !include recorder.yaml		# excludes to keep the recorder database a bit smaller
+
+zha:
+  zigpy_config:
+    ota:
+      ikea_provider: true                        # Auto update Trådfri devices
+
+http:
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+google_assistant: !include google_assistant_integ.yaml	# which entities to expose to google assistant
+
+group: !include groups.yaml
+
+cover:
+  - platform: group
+    entities:
+      - cover.gordijn_deur1_window_covering
+      - cover.gordijn_deur2_window_covering
+      - cover.gordijn_raam2_window_covering
+      - cover.gordijn_raam_1_window_covering
+      - cover.curtain_kitchen_local
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+frontend:
+  themes: !include_dir_merge_named themes
+
+tts:
+  - platform: google_cloud
+    key_file: ha-tts-engine-2f77f8905d66.json
+    voice: en-US-Wavenet-H
+    text_type: ssml
+
+homeassistant:
+  customize: !include customize.yaml
+  packages: !include_dir_named packages
+  allowlist_external_dirs:
+    - /config

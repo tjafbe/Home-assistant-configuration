@@ -1,0 +1,188 @@
+  - platform: template
+    sensors:
+        energy_daily_load_offpeak:
+          value_template: "{{ (states('sensor.energy_daily_production_offpeak') | float(0) + states('sensor.energy_daily_buy_offpeak') | float(0) - states('sensor.energy_daily_sell_offpeak') | float(0)) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_daily_load_peak:
+          value_template: "{{ (states('sensor.energy_daily_production_peak') | float(0) + states('sensor.energy_daily_buy_peak') | float(0) - states('sensor.energy_daily_sell_peak') | float(0)) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_daily_production_total:
+          value_template: "{{ (states('sensor.energy_daily_production_offpeak') | float(0) + states('sensor.energy_daily_production_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_daily_buy_total:
+          value_template: "{{ (states('sensor.energy_daily_buy_offpeak') | float(0) + states('sensor.energy_daily_buy_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_daily_sell_total:
+          value_template: "{{ (states('sensor.energy_daily_sell_offpeak') | float(0) + states('sensor.energy_daily_sell_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_daily_load_total:
+          value_template: "{{ (states('sensor.energy_daily_load_offpeak') | float(0) + states('sensor.energy_daily_load_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_daily_buy_offpeak_cost2:
+          value_template: "{{ (states('sensor.energy_daily_buy_offpeak') | float(0) * states('input_number.offpeak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_sell_offpeak_cost2:
+          value_template: "{{ (states('sensor.energy_daily_sell_offpeak') | float(0) * states('input_number.offpeak_inj_tariff') | float(0) / 100) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_load_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_daily_load_offpeak') | float(0) * states('input_number.offpeak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_buy_peak_cost2:
+          value_template: "{{ (states('sensor.energy_daily_buy_peak') | float(0) * states('input_number.peak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_sell_peak_cost2:
+          value_template: "{{ (states('sensor.energy_daily_sell_peak') | float(0) * states('input_number.peak_inj_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_load_peak_cost:
+          value_template: "{{ (states('sensor.energy_daily_load_peak') | float(0) * states('input_number.peak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_buy_cost:
+          value_template: "{{ (states('sensor.energy_daily_buy_offpeak_cost2')|float(0) + states('sensor.energy_daily_buy_peak_cost2')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_sell_cost:
+          value_template: "{{ (states('sensor.energy_daily_sell_offpeak_cost2')|float(0) + states('sensor.energy_daily_sell_peak_cost2')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_load_cost:
+          value_template: "{{ (states('sensor.energy_daily_load_offpeak_cost')|float(0) + states('sensor.energy_daily_load_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_savings:
+          value_template: "{{ (states('sensor.energy_daily_load_cost')|float(0) - states('sensor.energy_daily_buy_cost')|float(0) + states('sensor.energy_daily_sell_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_daily_buy_offpeak_cost2')|float(0) - states('sensor.energy_daily_sell_offpeak_cost2')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_peak_cost:
+          value_template: "{{ (states('sensor.energy_daily_buy_peak_cost2')|float(0) - states('sensor.energy_daily_sell_peak_cost2')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_daily_cost:
+          value_template: "{{ (states('sensor.energy_daily_offpeak_cost')|float(0) + states('sensor.energy_daily_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+
+        energy_monthly_load_offpeak:
+          value_template: "{{ (states('sensor.energy_monthly_production_offpeak') | float(0) + states('sensor.energy_monthly_buy_offpeak') | float(0) - states('sensor.energy_monthly_sell_offpeak') | float(0)) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_monthly_load_peak:
+          value_template: "{{ (states('sensor.energy_monthly_production_peak') | float(0) + states('sensor.energy_monthly_buy_peak') | float(0) - states('sensor.energy_monthly_sell_peak') | float(0)) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_monthly_production_total:
+          value_template: "{{ (states('sensor.energy_monthly_production_offpeak') | float(0) + states('sensor.energy_monthly_production_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_monthly_buy_total:
+          value_template: "{{ (states('sensor.energy_monthly_buy_offpeak') | float(0) + states('sensor.energy_monthly_buy_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_monthly_sell_total:
+          value_template: "{{ (states('sensor.energy_monthly_sell_offpeak') | float(0) + states('sensor.energy_monthly_sell_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_monthly_load_total:
+          value_template: "{{ (states('sensor.energy_monthly_load_offpeak') | float(0) + states('sensor.energy_monthly_load_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_monthly_buy_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_monthly_buy_offpeak') | float(0) * states('input_number.offpeak_tariff') | float(0) / 100) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_sell_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_monthly_sell_offpeak') | float(0) * states('input_number.offpeak_inj_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_load_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_monthly_load_offpeak') | float(0) * states('input_number.offpeak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_buy_peak_cost:
+          value_template: "{{ (states('sensor.energy_monthly_buy_peak') | float(0) * states('input_number.peak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_sell_peak_cost:
+          value_template: "{{ (states('sensor.energy_monthly_sell_peak') | float(0) * states('input_number.peak_inj_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_load_peak_cost:
+          value_template: "{{ (states('sensor.energy_monthly_load_peak') | float(0) * states('input_number.peak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_buy_cost:
+          value_template: "{{ (states('sensor.energy_monthly_buy_offpeak_cost')|float(0) + states('sensor.energy_monthly_buy_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_sell_cost:
+          value_template: "{{ (states('sensor.energy_monthly_sell_offpeak_cost')|float(0) + states('sensor.energy_monthly_sell_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_load_cost:
+          value_template: "{{ (states('sensor.energy_monthly_load_offpeak_cost')|float(0) + states('sensor.energy_monthly_load_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_savings:
+          value_template: "{{ (states('sensor.energy_monthly_load_cost')|float(0) - states('sensor.energy_monthly_buy_cost')|float(0) + states('sensor.energy_monthly_sell_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_monthly_buy_offpeak_cost')|float(0) - states('sensor.energy_monthly_sell_offpeak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_peak_cost:
+          value_template: "{{ (states('sensor.energy_monthly_buy_peak_cost')|float(0) - states('sensor.energy_monthly_sell_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_monthly_cost:
+          value_template: "{{ (states('sensor.energy_monthly_offpeak_cost')|float(0) + states('sensor.energy_monthly_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+
+        energy_yearly_load_offpeak:
+          value_template: "{{ (states('sensor.energy_yearly_production_offpeak') | float(0) + states('sensor.energy_yearly_buy_offpeak') | float(0) - states('sensor.energy_yearly_sell_offpeak') | float(0)) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_yearly_load_peak:
+          value_template: "{{ (states('sensor.energy_yearly_production_peak') | float(0) + states('sensor.energy_yearly_buy_peak') | float(0) - states('sensor.energy_yearly_sell_peak') | float(0)) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_yearly_production_total:
+          value_template: "{{ (states('sensor.energy_yearly_production_offpeak') | float(0) + states('sensor.energy_yearly_production_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_yearly_buy_total:
+          value_template: "{{ (states('sensor.energy_yearly_buy_offpeak') | float(0) + states('sensor.energy_yearly_buy_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_yearly_sell_total:
+          value_template: "{{ (states('sensor.energy_yearly_sell_offpeak') | float(0) + states('sensor.energy_yearly_sell_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_yearly_load_total:
+          value_template: "{{ (states('sensor.energy_yearly_load_offpeak') | float(0) + states('sensor.energy_yearly_load_peak') | float(0) ) | round(2) }}"
+          unit_of_measurement: 'kWh'
+        energy_yearly_buy_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_yearly_buy_offpeak') | float(0) * states('input_number.offpeak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_sell_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_yearly_sell_offpeak') | float(0) * states('input_number.offpeak_inj_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_load_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_yearly_load_offpeak') | float(0) * states('input_number.offpeak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_buy_peak_cost:
+          value_template: "{{ (states('sensor.energy_yearly_buy_peak') | float(0) * states('input_number.peak_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_sell_peak_cost:
+          value_template: "{{ (states('sensor.energy_yearly_sell_peak') | float(0) * states('input_number.peak_inj_tariff') | float(0) / 100 ) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_load_peak_cost:
+          value_template: "{{ (states('sensor.energy_yearly_load_peak') | float(0) * states('input_number.peak_tariff') | float(0) / 100) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_buy_cost:
+          value_template: "{{ (states('sensor.energy_yearly_buy_offpeak_cost')|float(0) + states('sensor.energy_yearly_buy_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_sell_cost:
+          value_template: "{{ (states('sensor.energy_yearly_sell_offpeak_cost')|float(0) + states('sensor.energy_yearly_sell_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_load_cost:
+          value_template: "{{ (states('sensor.energy_yearly_load_offpeak_cost')|float(0) + states('sensor.energy_yearly_load_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_savings:
+          value_template: "{{ (states('sensor.energy_yearly_load_cost')|float(0) - states('sensor.energy_yearly_buy_cost')|float(0) + states('sensor.energy_yearly_sell_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_offpeak_cost:
+          value_template: "{{ (states('sensor.energy_yearly_buy_offpeak_cost')|float(0) - states('sensor.energy_yearly_sell_offpeak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_peak_cost:
+          value_template: "{{ (states('sensor.energy_yearly_buy_peak_cost')|float(0) - states('sensor.energy_yearly_sell_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+        energy_yearly_cost:
+          value_template: "{{ (states('sensor.energy_yearly_offpeak_cost')|float(0) + states('sensor.energy_yearly_peak_cost')|float(0)) | round(2) }}"
+          unit_of_measurement: 'EUR'
+
+        savings2:
+          value_template: "{{ ((states('sensor.energy_yearly_production_offpeak') | float(0) - states('sensor.energy_yearly_sell_offpeak') | float(0)) * states('input_number.offpeak_tariff') | float(0) / 100) + ((states('sensor.energy_yearly_sell_offpeak') | float(0)) * states('input_number.offpeak_inj_tariff') | float(0) / 100) + ((states('sensor.energy_yearly_production_peak') | float(0) - states('sensor.energy_yearly_sell_peak') | float(0)) * states('input_number.peak_tariff') | float(0) / 100) + ((states('sensor.energy_yearly_sell_peak') | float(0)) * states('input_number.peak_inj_tariff') | float(0) / 100) | round(2) }}"
+
+        grid_production_consumption:
+          value_template: "{{ states.sensor.power_consumed.state | float(0) - states.sensor.power_produced.state | float(0) }}"
+          device_class: power
+          unit_of_measurement: kW
+
+        total_savings:
+          value_template: "{{ states.sensor.energy_yearly_savings.state | float(0) + 657 }}"
+          unit_of_measurement: 'EUR'
+          icon_template: mdi:currency-eur

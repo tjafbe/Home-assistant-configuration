@@ -1,0 +1,24 @@
+  - platform: tod
+    name: quiet_hours
+    after: "22:00"
+    before: "07:00"
+  - platform: ping
+    host: 192.168.0.239
+    name: "Xbox One"
+    count: 2
+    scan_interval: 30
+  - platform: ping
+    host: 192.168.0.121
+    name: "Desktop PC"
+    count: 2
+    scan_interval: 60
+  - platform: ping
+    host: 192.168.0.183
+    name: "Archer modem speelkamer"
+    count: 2
+    scan_interval: 60
+  - platform: ping
+    host: 192.168.0.186
+    name: "Archer modem slaapkamer"
+    count: 2
+    scan_interval: 60

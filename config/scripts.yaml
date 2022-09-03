@@ -1,0 +1,744 @@
+blinds_up:
+  sequence:
+  - device_id: 6653eff92dec5309b2796c59a63be3ef
+    domain: cover
+    entity_id: cover.gordijn_deur2_window_covering
+    type: set_position
+    position: 100
+  - device_id: 24062ec41d13a3c246cd1010c20f858f
+    domain: cover
+    entity_id: cover.gordijn_deur1_window_covering
+    type: set_position
+    position: 100
+  - device_id: 00d215bf4689f158396b5d065b3bae4e
+    domain: cover
+    entity_id: cover.gordijn_raam_1_window_covering
+    type: set_position
+    position: 100
+  - device_id: 169a6d8d8ab89cac3638900d17d2e912
+    domain: cover
+    entity_id: cover.gordijn_raam2_window_covering
+    type: set_position
+    position: 100
+  - device_id: b8c662c728a0f4cc582b89afe39dfaf0
+    domain: cover
+    entity_id: cover.curtain_kitchen_local
+    type: set_position
+    position: 100
+  mode: single
+  alias: Blinds_up
+  icon: mdi:blinds-open
+blinds_down:
+  alias: Blinds_down
+  sequence:
+  - device_id: 6653eff92dec5309b2796c59a63be3ef
+    domain: cover
+    entity_id: cover.gordijn_deur2_window_covering
+    type: set_position
+    position: 0
+  - device_id: 24062ec41d13a3c246cd1010c20f858f
+    domain: cover
+    entity_id: cover.gordijn_deur1_window_covering
+    type: set_position
+    position: 0
+  - device_id: 00d215bf4689f158396b5d065b3bae4e
+    domain: cover
+    entity_id: cover.gordijn_raam_1_window_covering
+    type: set_position
+    position: 0
+  - device_id: 169a6d8d8ab89cac3638900d17d2e912
+    domain: cover
+    entity_id: cover.gordijn_raam2_window_covering
+    type: set_position
+    position: 0
+  - device_id: b8c662c728a0f4cc582b89afe39dfaf0
+    domain: cover
+    entity_id: cover.curtain_kitchen_local
+    type: set_position
+    position: 0
+  mode: single
+  icon: mdi:blinds
+blinds_xbox:
+  alias: Blinds_XBOX
+  sequence:
+  - device_id: 00d215bf4689f158396b5d065b3bae4e
+    domain: cover
+    entity_id: cover.gordijn_raam_1_window_covering
+    type: set_position
+    position: 25
+  - device_id: 169a6d8d8ab89cac3638900d17d2e912
+    domain: cover
+    entity_id: cover.gordijn_raam2_window_covering
+    type: set_position
+    position: 25
+  mode: single
+  icon: mdi:microsoft-xbox
+blinds_zon:
+  alias: Blinds sun
+  sequence:
+  - device_id: 6653eff92dec5309b2796c59a63be3ef
+    domain: cover
+    entity_id: cover.gordijn_deur2_window_covering
+    type: set_position
+    position: 30
+  - device_id: 24062ec41d13a3c246cd1010c20f858f
+    domain: cover
+    entity_id: cover.gordijn_deur1_window_covering
+    type: set_position
+    position: 100
+  - device_id: 00d215bf4689f158396b5d065b3bae4e
+    domain: cover
+    entity_id: cover.gordijn_raam_1_window_covering
+    type: set_position
+    position: 30
+  - device_id: 169a6d8d8ab89cac3638900d17d2e912
+    domain: cover
+    entity_id: cover.gordijn_raam2_window_covering
+    type: set_position
+    position: 30
+  mode: single
+  icon: mdi:weather-sunny
+stubru:
+  alias: Play Stubru on Chromecast
+  sequence:
+  - choose:
+    - conditions:
+      - condition: device
+        type: is_off
+        device_id: 9cfe9cbc064e219a4483164aea77c197
+        entity_id: switch.smart_plug_tv_local
+        domain: switch
+      sequence:
+      - type: turn_on
+        device_id: 9cfe9cbc064e219a4483164aea77c197
+        entity_id: switch.smart_plug_tv_local
+        domain: switch
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 55
+          milliseconds: 0
+    default: []
+  - scene: scene.audio_chromecast
+  - service: media_player.play_media
+    data:
+      media_content_id: http://icecast.vrtcdn.be/stubru-high.mp3
+      media_content_type: audio/mp4
+    target:
+      entity_id: media_player.chromecast
+  - service: media_player.volume_set
+    target:
+      entity_id: media_player.chromecast
+    data:
+      volume_level: 0.26
+  - scene: scene.light_living_room_brightness_40
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 10
+      milliseconds: 0
+  - scene: scene.tv_power
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: media_player.media_play
+    target:
+      entity_id: media_player.chromecast
+  mode: single
+  icon: mdi:radio
+play_spotify_on_chromecast:
+  alias: Play Spotify on Chromecast
+  sequence:
+  - choose:
+    - conditions:
+      - condition: device
+        type: is_off
+        device_id: 9cfe9cbc064e219a4483164aea77c197
+        entity_id: switch.smart_plug_tv_local
+        domain: switch
+      sequence:
+      - type: turn_on
+        device_id: 9cfe9cbc064e219a4483164aea77c197
+        entity_id: switch.smart_plug_tv_local
+        domain: switch
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 35
+          milliseconds: 0
+    default: []
+  - scene: scene.audio_chromecast
+  - service: spotcast.start
+    data:
+      entity_id: media_player.chromecast
+      uri: spotify:playlist:3u6pUYguDPotYl3BHwCw6I
+      random_song: true
+      shuffle: true
+      start_volume: 50
+  - scene: scene.light_living_room_brightness_40
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 10
+      milliseconds: 0
+  - scene: scene.tv_power
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 4
+      milliseconds: 0
+  - service: media_player.media_play_pause
+    target:
+      entity_id: media_player.chromecast
+  mode: single
+  icon: mdi:radio
+evening_scene:
+  alias: Evening scene
+  sequence:
+  - service: script.blinds_down
+    data: {}
+  - service: script.play_stubru_on_nest
+    data: {}
+  - service: automation.turn_on
+    target:
+      entity_id: automation.alarm_motion
+    data: {}
+  - type: turn_on
+    device_id: da99614fdcda0c1b2591d6a9fdb3e00f
+    entity_id: light.light_living_room_local
+    domain: light
+    brightness_pct: 40
+  mode: single
+  icon: mdi:weather-night
+speech_notification_service:
+  alias: speech_notification_living_EN
+  sequence:
+  - condition: state
+    entity_id: binary_sensor.quiet_hours
+    state: 'off'
+  - choose:
+    - conditions:
+      - condition: device
+        device_id: 8e8d0cd59a0abe314474b304f1c1561a
+        domain: media_player
+        entity_id: media_player.living_room_speaker
+        type: is_playing
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.nest_was_playing
+      - service: input_text.set_value
+        data:
+          value: '{{ states.media_player.living_room_speaker.attributes.app_name }}'
+        target:
+          entity_id: input_text.nest_app
+      - service: media_player.media_pause
+        data: {}
+        target:
+          entity_id: media_player.living_room_speaker
+    default:
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.nest_was_playing
+    - service: media_player.turn_on
+      data: {}
+      target:
+        entity_id: media_player.living_room_speaker
+  - service: input_text.set_value
+    data:
+      value: '{{ states.media_player.living_room_speaker.attributes.volume_level }}'
+    target:
+      entity_id: input_text.volume_level
+  - service: media_player.volume_set
+    data_template:
+      volume_level: 0.8
+      entity_id: media_player.living_room_speaker
+  - choose:
+    - conditions:
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: media_player.living_room_speaker
+          state: unavailable
+      sequence:
+      - service: tts.google_cloud_say
+        data:
+          entity_id: media_player.living_room_speaker
+          message: '{{ message }}'
+          options:
+            voice: en-US-Wavenet-C
+            speed: 0.9
+            pitch: 3.5
+    default:
+    - service: notify.mobile_app_sm_t500
+      data:
+        message: TTS
+        title: '{{ message }}'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - wait_for_trigger:
+    - platform: device
+      device_id: 8e8d0cd59a0abe314474b304f1c1561a
+      domain: media_player
+      entity_id: media_player.living_room_speaker
+      type: idle
+    timeout: '45'
+  - condition: state
+    entity_id: input_boolean.nest_was_playing
+    state: 'on'
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_text.nest_app
+        state: Default Media Receiver
+      sequence:
+      - service: script.play_stubru_on_nest
+        data: {}
+    - conditions:
+      - condition: state
+        entity_id: input_text.nest_app
+        state: Spotify
+      sequence:
+      - service: script.play_spotify_on_nest
+        data: {}
+    default:
+    - service: script.play_stubru_on_nest
+      data: {}
+  - service: media_player.volume_set
+    data:
+      volume_level: '{{ states.input_text.volume_level.state }}'
+    target:
+      entity_id: media_player.living_room_speaker
+  mode: single
+speech_notification_wout:
+  alias: speech_notification_wout
+  sequence:
+  - condition: state
+    entity_id: binary_sensor.quiet_hours
+    state: 'off'
+  - service: notify.mobile_app_gsm_wout
+    data:
+      message: TTS
+      title: '{{ message }}'
+  mode: single
+holiday_mode:
+  sequence:
+  - type: turn_off
+    device_id: 9cfe9cbc064e219a4483164aea77c197
+    entity_id: switch.smart_plug_tv_local
+    domain: switch
+  - service: automation.turn_off
+    target:
+      entity_id:
+      - automation.disable_alarm
+  - service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.thermostaat_bathroom_thermostat
+      - climate.thermostaat_jana_thermostat
+      - climate.thermostaat_wout_thermostat
+      - climate.bathroom2_thermostat
+    data:
+      temperature: 5
+  - service: timer.start
+    data:
+      duration: '300'
+    target:
+      entity_id: timer.alarm_grace_period
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - service: automation.turn_on
+    target:
+      entity_id:
+      - automation.alarm_home
+      - automation.holiday_lights_bathroom_start
+      - automation.holiday_lights_bathroom_stop
+      - automation.holiday_lights_dinner_start
+      - automation.holiday_lights_dinner_stop
+      - automation.holiday_lights_hallway
+      - automation.holiday_lights_jana_start
+      - automation.holiday_lights_jana_stop
+      - automation.holiday_lights_wout_start
+      - automation.holiday_lights_wout_stop
+  mode: single
+  alias: Holiday_mode
+  icon: mdi:beach
+turn_off_xbox:
+  alias: Turn off Xbox
+  sequence:
+  - type: turn_off
+    device_id: 1af7dc36ce3e6e47230d29ad3420d165
+    entity_id: remote.xboxone_remote
+    domain: remote
+  mode: single
+toggle_pc:
+  alias: Toggle_PC
+  sequence:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.desktop_pc
+        state: 'on'
+      sequence:
+      - service: shell_command.desktop_power_off
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.desktop_pc
+        state: 'off'
+      sequence:
+      - service: shell_command.desktop_power_on
+    default: []
+  mode: single
+holiday_mode_return:
+  alias: Holiday_mode_return
+  sequence:
+  - service: automation.turn_on
+    target:
+      entity_id: automation.disable_alarm
+  - service: automation.turn_off
+    target:
+      entity_id:
+      - automation.alarm_home
+      - automation.holiday_lights_bathroom_start
+      - automation.holiday_lights_bathroom_stop
+      - automation.holiday_lights_dinner_start
+      - automation.holiday_lights_dinner_stop
+      - automation.holiday_lights_hallway
+      - automation.holiday_lights_jana_start
+      - automation.holiday_lights_jana_stop
+      - automation.holiday_lights_wout_start
+      - automation.holiday_lights_wout_stop
+  - service: homeassistant.turn_off
+    target:
+      entity_id: group.lights_all
+  mode: single
+  icon: mdi:beach
+play_spotify_on_nest:
+  alias: Play Spotify on Nest
+  sequence:
+  - service: spotcast.start
+    data:
+      entity_id: media_player.living_room_speaker
+      uri: spotify:playlist:3u6pUYguDPotYl3BHwCw6I
+      random_song: true
+      shuffle: true
+      start_volume: 36
+  mode: single
+  icon: mdi:radio
+play_stubru_on_nest:
+  alias: Studio Brussel
+  sequence:
+  - service: media_player.play_media
+    data:
+      media_content_id: http://icecast.vrtcdn.be/stubru-high.mp3
+      media_content_type: audio/mp4
+      enqueue: replace
+    target:
+      entity_id:
+      - media_player.living_room_speaker
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: time
+          before: 08:00:00
+          weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          after: 00:00:00
+        - condition: time
+          after: '12:00:00'
+          before: '13:00:00'
+        - condition: time
+          after: '17:30:00'
+          before: '18:30:00'
+      sequence:
+      - service: media_player.volume_set
+        data:
+          volume_level: 0.5
+        target:
+          entity_id: media_player.living_room_speaker
+    default:
+    - service: media_player.volume_set
+      data:
+        volume_level: 0.35
+      target:
+        entity_id: media_player.living_room_speaker
+  mode: single
+  icon: mdi:radio
+switch_to_xbox:
+  alias: Switch to xbox
+  sequence:
+  - scene: scene.tv_input3
+  - scene: scene.audio_xbox
+  mode: single
+  icon: mdi:microsoft-xbox
+switch_to_chromecast:
+  alias: Switch to chromecast
+  sequence:
+  - scene: scene.tv_input
+  - scene: scene.audio_chromecast
+  mode: single
+  icon: mdi:google-chrome
+sony_amp:
+  alias: Sony amp
+  sequence:
+  - scene: scene.loudspeaker_power
+  mode: single
+  icon: mdi:speaker-off
+speech_notification_living_nl:
+  alias: speech_notification_living_NL
+  sequence:
+  - condition: state
+    entity_id: binary_sensor.quiet_hours
+    state: 'off'
+  - choose:
+    - conditions:
+      - condition: device
+        device_id: 8e8d0cd59a0abe314474b304f1c1561a
+        domain: media_player
+        entity_id: media_player.living_room_speaker
+        type: is_playing
+      sequence:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.nest_was_playing
+      - service: input_text.set_value
+        data:
+          value: '{{ states.media_player.living_room_speaker.attributes.app_name }}'
+        target:
+          entity_id: input_text.nest_app
+      - service: media_player.media_pause
+        data: {}
+        target:
+          entity_id: media_player.living_room_speaker
+    default:
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.nest_was_playing
+    - service: media_player.turn_on
+      data: {}
+      target:
+        entity_id: media_player.living_room_speaker
+  - service: input_text.set_value
+    data:
+      value: '{{ states.media_player.living_room_speaker.attributes.volume_level }}'
+    target:
+      entity_id: input_text.volume_level
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.8
+    target:
+      entity_id: media_player.living_room_speaker
+  - service: tts.google_cloud_say
+    data:
+      entity_id: media_player.living_room_speaker
+      message: '{{ message }}'
+      options:
+        voice: nl-BE-Wavenet-A
+        speed: 0.95
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - wait_for_trigger:
+    - platform: device
+      device_id: 8e8d0cd59a0abe314474b304f1c1561a
+      domain: media_player
+      entity_id: media_player.living_room_speaker
+      type: idle
+    timeout: '30'
+  - condition: state
+    entity_id: input_boolean.nest_was_playing
+    state: 'on'
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_text.nest_app
+        state: Default Media Receiver
+      sequence:
+      - service: script.play_stubru_on_nest
+        data: {}
+    - conditions:
+      - condition: state
+        entity_id: input_text.nest_app
+        state: Spotify
+      sequence:
+      - service: script.play_spotify_on_nest
+        data: {}
+    default:
+    - service: script.play_stubru_on_nest
+      data: {}
+  - service: media_player.volume_set
+    data:
+      volume_level: '{{ states.input_text.volume_level.state }}'
+    target:
+      entity_id: media_player.living_room_speaker
+  mode: single
+xbox_pause:
+  sequence:
+  - service: media_player.media_play_pause
+    data: {}
+    target:
+      entity_id: media_player.xboxone
+  mode: single
+  alias: Xbox pause
+p:
+  alias: Pause
+  sequence:
+  - service: media_player.media_pause
+    data: {}
+    target:
+      entity_id:
+      - media_player.chromecast
+      - media_player.xboxone
+  mode: single
+  icon: mdi:pause
+r:
+  alias: Resume
+  sequence:
+  - service: media_player.media_play_pause
+    data: {}
+    target:
+      entity_id:
+      - media_player.chromecast
+      - media_player.xboxone
+  mode: single
+  icon: mdi:play
+start_charging_the_car:
+  alias: 'Start charging the car '
+  sequence:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.superb_charging
+  mode: single
+stop_charging_the_car:
+  alias: Stop charging the car
+  sequence:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.superb_charging
+  mode: single
+blinds_down_2:
+  alias: Blinds_morning
+  sequence:
+  - device_id: 6653eff92dec5309b2796c59a63be3ef
+    domain: cover
+    entity_id: cover.gordijn_deur2_window_covering
+    type: set_position
+    position: 50
+  - device_id: 24062ec41d13a3c246cd1010c20f858f
+    domain: cover
+    entity_id: cover.gordijn_deur1_window_covering
+    type: set_position
+    position: 50
+  mode: single
+  icon: mdi:coffee
+bedroom_lights_normal:
+  alias: Bedroom lights normal
+  sequence:
+  - choose:
+    - conditions:
+      - condition: time
+        before: '21:30:00'
+        after: 06:30:00
+      sequence:
+      - service: light.turn_on
+        data:
+          rgb_color:
+          - 255
+          - 235
+          - 145
+          brightness_pct: 100
+        target:
+          entity_id: light.bedroom_lights
+      - service: light.turn_on
+        data:
+          rgb_color:
+          - 1
+          - 237
+          - 254
+          brightness_pct: 80
+        target:
+          entity_id: light.bedroom_mood_lights
+    - conditions:
+      - condition: time
+        before: '22:30:00'
+        after: '21:30:00'
+      sequence:
+      - service: light.turn_on
+        data:
+          rgb_color:
+          - 255
+          - 235
+          - 145
+          brightness_pct: 70
+        target:
+          entity_id: light.bedroom_lights
+      - service: light.turn_on
+        data:
+          rgb_color:
+          - 251
+          - 0
+          - 255
+          brightness_pct: 70
+        target:
+          entity_id: light.bedroom_mood_lights
+    - conditions:
+      - condition: time
+        before: '23:59:59'
+        after: '22:30:00'
+      sequence:
+      - service: light.turn_on
+        data:
+          rgb_color:
+          - 255
+          - 235
+          - 145
+          brightness_pct: 50
+        target:
+          entity_id: light.bedroom_lights
+      - service: light.turn_on
+        data:
+          rgb_color:
+          - 255
+          - 0
+          - 200
+          brightness_pct: 50
+        target:
+          entity_id: light.bedroom_mood_lights
+    - conditions:
+      - condition: time
+        before: 06:30:00
+        after: 00:00:00
+      sequence:
+      - service: light.turn_on
+        data:
+          rgb_color:
+          - 255
+          - 235
+          - 145
+          brightness_pct: 7
+        target:
+          entity_id: light.bedroom_mood_lights
+    default: []
+  mode: single
+  icon: mdi:lightbulb-auto
